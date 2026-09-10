@@ -1692,6 +1692,279 @@
 })();
 </script>
 
+    <section data-tela="checklist-veicular" class="hidden">
+  <div class="px-4 pt-4 pb-6 space-y-4">
+    <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-4 flex items-center gap-3">
+      <button onclick="mostrarTela('detalhe-da-os')" class="w-9 h-9 flex items-center justify-center rounded-full bg-stone-100 hover:bg-stone-200 active:scale-90 transition-all flex-shrink-0">
+        <svg class="w-5 h-5 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="min-w-0">
+        <h1 class="font-display text-lg font-bold text-stone-800 leading-tight">Checklist Veicular</h1>
+        <p class="text-xs text-stone-500 truncate">OS #1284 — Honda Civic 2022 — Carlos Silva</p>
+      </div>
+      <button onclick="mostrarTela('painel-do-mecanico')" class="ml-auto w-9 h-9 flex items-center justify-center rounded-full bg-stone-100 hover:bg-stone-200 active:scale-90 transition-all flex-shrink-0">
+        <svg class="w-5 h-5 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/></svg>
+      </button>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-4">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-semibold text-stone-500 uppercase tracking-wide">Progresso do Checklist</span>
+        <span id="checklist-progress-text" class="text-xs font-bold text-orange-600">0%</span>
+      </div>
+      <div class="w-full h-3 bg-stone-100 rounded-full overflow-hidden">
+        <div id="checklist-progress-bar" class="h-full bg-gradient-to-r from-orange-500 to-orange-400 rounded-full transition-all duration-500 ease-out" style="width:0%"></div>
+      </div>
+      <p id="checklist-progress-sub" class="text-[10px] text-stone-400 mt-1.5 text-center">0 de 14 itens verificados</p>
+    </div>
+
+    <div id="checklist-categories-container" class="space-y-3"></div>
+
+    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex gap-3">
+      <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+      <p class="text-xs text-amber-800 leading-relaxed">Informe ao cliente que o checklist será preenchido durante a inspeção. Itens com problema geram aviso automático ao atendente.</p>
+    </div>
+
+    <button onclick="checklist_veicular_enviar()" id="btn-enviar-checklist" disabled class="w-full py-3.5 px-6 rounded-2xl font-display font-bold text-base text-white bg-gradient-to-r from-orange-600 to-orange-500 active:scale-[0.97] transition-all shadow-lg shadow-orange-200 disabled:opacity-40 disabled:active:scale-100 disabled:cursor-not-allowed">
+      <span class="flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+        Enviar Checklist
+      </span>
+    </button>
+  </div>
+</section>
+
+<script>
+const CHECKLIST_DATA = [
+  { id:'motor', nome:'Motor', icone:'M12 6c0-1.1-.9-2-2-2h-.17C9.4 2.83 8 3.83 8 5v4H6c-1.1 0-2 .9-2 2v5h2.17l1 8H17l1-8H18V7c0-1.1-.9-2-2-2h-.17c-.83 0-1.4-.83-1.17-1.83C15.67 2.83 14.67 2 13.67 2H12c-1.1 0-2 .9-2 2z', itens:[
+    { id:'motor-nivel-oleo', nome:'Nível de óleo', ok:false, problema:false, observacao:'', foto:null },
+    { id:'motor-correia', nome:'Correia dentada / polias', ok:false, problema:false, observacao:'', foto:null },
+    { id:'motor-vazamentos', nome:'Vazamentos de óleo / água', ok:false, problema:false, observacao:'', foto:null },
+    { id:'motor-filtros', nome:'Filtros (óleo, ar, combustível)', ok:false, problema:false, observacao:'', foto:null },
+  ]},
+  { id:'freios', nome:'Sistema de Freios', icone:'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z', itens:[
+    { id:'freio-pastilhas', nome:'Pastilhas de freio', ok:false, problema:false, observacao:'', foto:null },
+    { id:'freio-discos', nome:'Discos / tambores', ok:false, problema:false, observacao:'', foto:null },
+    { id:'freio-fluido', nome:'Nível do fluido de freio', ok:false, problema:false, observacao:'', foto:null },
+  ]},
+  { id:'suspensao', nome:'Suspensão', icone:'M5 12h14M5 12l3-3m-3 3l-3-3m18 3l-3-3m3 3l3-3M7 7l-3 3m3-3l3 3M17 7l3 3m-3-3l-3 3', itens:[
+    { id:'susp-amortecedores', nome:'Amortecedores', ok:false, problema:false, observacao:'', foto:null },
+    { id:'susp-molas', nome:'Molas e batentes', ok:false, problema:false, observacao:'', foto:null },
+    { id:'susp-bracos', nome:'Braços de suspensão / pivôs', ok:false, problema:false, observacao:'', foto:null },
+  ]},
+  { id:'pneus', nome:'Pneus', icone:'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm7.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z', itens:[
+    { id:'pneu-calibragem', nome:'Calibragem dos pneus', ok:false, problema:false, observacao:'', foto:null },
+    { id:'pneu-desgaste', nome:'Desgaste / profundidade', ok:false, problema:false, observacao:'', foto:null },
+    { id:'pneu-marca', nome:'Marca e modelo', ok:false, problema:false, observacao:'', foto:null },
+  ]},
+  { id:'eletrica', nome:'Elétrica', icone:'M13 2L3 14h9l-1 8 10-12h-9l1-8z', itens:[
+    { id:'elec-bateria', nome:'Bateria (carga e bornes)', ok:false, problema:false, observacao:'', foto:null },
+    { id:'elec-alternador', nome:'Alternador', ok:false, problema:false, observacao:'', foto:null },
+    { id:'elec-lampadas', nome:'Lâmpadas (farol, seta, freio)', ok:false, problema:false, observacao:'', foto:null },
+  ]},
+  { id:'lataria', nome:'Lataria e Pintura', icone:'M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18-.21 0-.41-.06-.57-.18l-7.9-4.44A.991.991 0 013 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44A.99.99 0 0112 2c.21 0 .41.06.57.18l7.9 4.44c.32.17.53.5.53.88v9zM12 4.15L5 8.09v7.82l7 3.94 7-3.94V8.09l-7-3.94z', itens:[
+    { id:'lat-amassados', nome:'Amassados / avarias', ok:false, problema:false, observacao:'', foto:null },
+    { id:'lat-arranhoes', nome:'Arranhões / pintura', ok:false, problema:false, observacao:'', foto:null },
+    { id:'lat-vidros', nome:'Vidros e para-brisa', ok:false, problema:false, observacao:'', foto:null },
+  ]},
+];
+
+let checklist_expanded = {};
+
+function checklist_veicular_verificarTodosPreenchidos() {
+  for (const cat of CHECKLIST_DATA) {
+    for (const item of cat.itens) {
+      if (!item.ok && !item.problema) return false;
+    }
+  }
+  return true;
+}
+
+function checklist_veicular_contarVerificados() {
+  let count = 0;
+  for (const cat of CHECKLIST_DATA) {
+    for (const item of cat.itens) {
+      if (item.ok || item.problema) count++;
+    }
+  }
+  return count;
+}
+
+function checklist_veicular_totalItens() {
+  let total = 0;
+  for (const cat of CHECKLIST_DATA) total += cat.itens.length;
+  return total;
+}
+
+function checklist_veicular_atualizarProgresso() {
+  const total = checklist_veicular_totalItens();
+  const ver = checklist_veicular_contarVerificados();
+  const pct = Math.round((ver / total) * 100);
+  document.getElementById('checklist-progress-bar').style.width = pct + '%';
+  document.getElementById('checklist-progress-text').textContent = pct + '%';
+  document.getElementById('checklist-progress-sub').textContent = ver + ' de ' + total + ' itens verificados';
+  const btn = document.getElementById('btn-enviar-checklist');
+  btn.disabled = ver < total;
+}
+
+function checklist_veicular_renderizar() {
+  const container = document.getElementById('checklist-categories-container');
+  const iconeChecklist = `<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>`;
+
+  container.innerHTML = CHECKLIST_DATA.map(cat => {
+    const isOpen = checklist_expanded[cat.id];
+    const catId = cat.id;
+    const itemsHtml = cat.itens.map(item => {
+      const isOK = item.ok;
+      const isProblem = item.problema;
+      let statusClass = '';
+      let statusLabel = '';
+      if (isOK) { statusClass = 'bg-emerald-100 text-emerald-700 border-emerald-200'; statusLabel = 'OK'; }
+      else if (isProblem) { statusClass = 'bg-red-100 text-red-700 border-red-200'; statusLabel = 'Problema'; }
+
+      return `
+      <div id="ci-${item.id}" class="py-3 border-b border-stone-50 last:border-0">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm font-medium text-stone-700 flex-1">${item.nome}</span>
+          ${statusLabel ? `<span class="ml-2 text-[10px] font-bold px-2 py-0.5 rounded-full border ${statusClass}">${statusLabel}</span>` : ''}
+        </div>
+        <div class="flex gap-1.5 mb-2.5">
+          <button onclick="checklist_veicular_setStatus('${catId}','${item.id}','ok')" id="btn-${item.id}-ok" class="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95 border ${isOK ? 'bg-emerald-500 text-white border-emerald-500 shadow-sm shadow-emerald-200' : 'bg-white text-stone-500 border-stone-200 hover:border-emerald-300 hover:text-emerald-600'}">✓ OK</button>
+          <button onclick="checklist_veicular_setStatus('${catId}','${item.id}','problema')" id="btn-${item.id}-problema" class="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95 border ${isProblem ? 'bg-red-500 text-white border-red-500 shadow-sm shadow-red-200' : 'bg-white text-stone-500 border-stone-200 hover:border-red-300 hover:text-red-600'}">⚠ Problema</button>
+          <button onclick="checklist_veicular_setStatus('${catId}','${item.id}','nao-verificado')" id="btn-${item.id}-nv" class="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95 border ${!isOK && !isProblem ? 'bg-stone-200 text-stone-600 border-stone-300' : 'bg-white text-stone-500 border-stone-200 hover:border-stone-300 hover:text-stone-600'}">— Não verif.</button>
+        </div>
+        <div class="space-y-2">
+          <textarea id="obs-${item.id}" placeholder="Observações (opcional)..." rows="1" oninput="checklist_veicular_saveObs('${catId}','${item.id}',this.value)" class="w-full text-xs px-3 py-2 rounded-xl border border-stone-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-100 outline-none resize-none transition-all text-stone-600 placeholder:text-stone-400">${item.observacao}</textarea>
+          <button onclick="document.getElementById('input-foto-${item.id}').click()" class="inline-flex items-center gap-1.5 text-[11px] font-medium text-orange-600 hover:text-orange-700 active:scale-95 transition-all px-2 py-1 rounded-lg hover:bg-orange-50">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            ${item.foto ? 'Foto anexada ✓' : 'Anexar foto'}
+          </button>
+          <input type="file" accept="image/*" id="input-foto-${item.id}" class="hidden" onchange="checklist_veicular_uploadFoto('${catId}','${item.id}',this)">
+        </div>
+        ${isProblem ? `<div id="alert-${item.id}" class="mt-2 flex items-start gap-1.5 bg-red-50 border border-red-100 rounded-lg px-2.5 py-2"><svg class="w-3.5 h-3.5 text-red-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg><span class="text-[11px] text-red-700">Problema detectado — o atendente será notificado</span></div>` : ''}
+      </div>`;
+    }).join('');
+
+    return `
+    <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden transition-all duration-300">
+      <button onclick="checklist_veicular_toggle('${cat.id}')" class="w-full flex items-center gap-3 p-4 text-left hover:bg-stone-50 active:bg-stone-100 transition-all">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-100 to-orange-50 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${cat.icone}"/></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-display font-bold text-sm text-stone-800">${cat.nome}</h3>
+          <p class="text-[11px] text-stone-500">${cat.itens.length} itens para verificar</p>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          ${checklist_veicular_catStatus(cat)}
+          <svg class="w-5 h-5 text-stone-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </div>
+      </button>
+      <div class="${isOpen ? '' : 'hidden'}">
+        <div class="px-4 pb-3 border-t border-stone-50">
+          <div class="mt-1">${itemsHtml}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  checklist_veicular_atualizarProgresso();
+}
+
+function checklist_veicular_catStatus(cat) {
+  let ok = 0, prob = 0;
+  for (const item of cat.itens) {
+    if (item.ok) ok++;
+    if (item.problema) prob++;
+  }
+  if (ok === cat.itens.length) return '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">Completo</span>';
+  if (prob > 0) return '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700">' + prob + ' problema(s)</span>';
+  return '<span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-stone-100 text-stone-500">Pendente</span>';
+}
+
+function checklist_veicular_toggle(catId) {
+  checklist_expanded[catId] = !checklist_expanded[catId];
+  checklist_veicular_renderizar();
+}
+
+function checklist_veicular_setStatus(catId, itemId, status) {
+  const cat = CHECKLIST_DATA.find(c => c.id === catId);
+  const item = cat.itens.find(i => i.id === itemId);
+  if (status === 'ok') { item.ok = true; item.problema = false; }
+  else if (status === 'problema') { item.ok = false; item.problema = true; }
+  else { item.ok = false; item.problema = false; }
+  checklist_veicular_renderizar();
+}
+
+function checklist_veicular_saveObs(catId, itemId, value) {
+  const cat = CHECKLIST_DATA.find(c => c.id === catId);
+  const item = cat.itens.find(i => i.id === itemId);
+  item.observacao = value;
+}
+
+function checklist_veicular_uploadFoto(catId, itemId, input) {
+  if (input.files && input.files[0]) {
+    const cat = CHECKLIST_DATA.find(c => c.id === catId);
+    const item = cat.itens.find(i => i.id === itemId);
+    item.foto = input.files[0].name;
+    checklist_veicular_renderizar();
+    toast('Foto anexada ao item', 'ok');
+  }
+}
+
+function checklist_veicular_enviar() {
+  if (!checklist_veicular_verificarTodosPreenchidos()) {
+    toast('Preencha todos os itens antes de enviar', 'erro');
+    return;
+  }
+
+  const temProblema = CHECKLIST_DATA.some(cat => cat.itens.some(item => item.problema));
+
+  abrirModal(`
+    <div class="p-6 text-center">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-orange-100 flex items-center justify-center">
+        <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <h3 class="font-display font-bold text-lg text-stone-800 mb-1">Confirmar envio?</h3>
+      <p class="text-sm text-stone-500 mb-4">O checklist será enviado e o atendente será notificado.</p>
+      ${temProblema ? '<p class="text-xs text-red-600 bg-red-50 rounded-lg px-3 py-2 mb-4">⚠ Foram detectados problemas durante a inspeção. O atendente receberá um aviso prioritário.</p>' : '<p class="text-xs text-emerald-600 bg-emerald-50 rounded-lg px-3 py-2 mb-4">✓ Todos os itens foram aprovados. O atendente será notificado.</p>'}
+      <div class="flex gap-2">
+        <button onclick="fecharModal()" class="flex-1 py-2.5 rounded-xl border border-stone-200 text-stone-600 text-sm font-semibold hover:bg-stone-50 active:scale-95 transition-all">Cancelar</button>
+        <button onclick="checklist_veicular_confirmarEnvio()" class="flex-1 py-2.5 rounded-xl bg-orange-600 text-white text-sm font-bold hover:bg-orange-700 active:scale-95 transition-all shadow-sm shadow-orange-200">Enviar</button>
+      </div>
+    </div>
+  `, 'Confirmar Envio');
+}
+
+function checklist_veicular_confirmarEnvio() {
+  fecharModal();
+  toast('Checklist enviado com sucesso!', 'ok');
+
+  const btn = document.getElementById('btn-enviar-checklist');
+  btn.innerHTML = '<span class="flex items-center justify-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Enviado!</span>';
+  btn.classList.remove('from-orange-600', 'to-orange-500');
+  btn.classList.add('from-emerald-600', 'to-emerald-500', 'shadow-emerald-200');
+  btn.classList.remove('shadow-orange-200');
+  btn.disabled = true;
+
+  setTimeout(function() {
+    btn.innerHTML = '<span class="flex items-center justify-center gap-2"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>Enviar Checklist</span>';
+    btn.classList.add('from-orange-600', 'to-orange-500', 'shadow-orange-200');
+    btn.classList.remove('from-emerald-600', 'to-emerald-500', 'shadow-emerald-200');
+    btn.disabled = false;
+  }, 3000);
+
+  setTimeout(function() {
+    mostrarTela('painel-do-mecanico');
+  }, 2500);
+}
+
+if (document.querySelector('[data-tela="checklist-veicular"]')) {
+  checklist_expanded = { motor: true, freios: false, suspensao: false, pneus: false, eletrica: false, lataria: false };
+  checklist_veicular_renderizar();
+}
+</script>
+
     <!-- TELAS -->
         </div>
       </main>
