@@ -1965,6 +1965,215 @@ if (document.querySelector('[data-tela="checklist-veicular"]')) {
 }
 </script>
 
+    <section data-tela="painel-do-mecanico" class="hidden animate-fadein">
+  <div class="max-w-[430px] mx-auto flex flex-col min-h-screen bg-marca-50 font-body px-4 pt-3 pb-16">
+    <!-- Cabeçalho -->
+    <div class="mb-5">
+      <h1 class="font-display text-2xl text-marca-900 font-semibold">Olá, Ricardo Menezes</h1>
+      <p class="mt-1 text-marca-700 text-sm">Painel do Mecânico · Código MEC-10427</p>
+    </div>
+    <!-- Métricas / Indicadores -->
+    <div class="grid grid-cols-3 gap-3 mb-6">
+      <div class="card flex flex-col items-center py-3 bg-marca-100 rounded-xl shadow-[0_2px_8px_rgba(124,45,18,0.04)] transition hover:scale-[1.02]">
+        <div class="bg-gradient-to-br from-marca-100 via-marca-200 to-marca-300 rounded-full p-2 mb-2">
+          <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 17a2 2 0 002-2v-3.6l1.09-1.09a2.004 2.004 0 000-2.82 2.004 2.004 0 00-2.82 0l-1.09 1.09V9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2h-2v2a2 2 0 01-2 2h-6a2 2 0 01-2-2v-6a2 2 0 012-2h2"></path></svg>
+        </div>
+        <div class="font-display text-lg text-marca-900">3</div>
+        <div class="text-xs text-marca-700">Ativos</div>
+      </div>
+      <div class="card flex flex-col items-center py-3 bg-marca-100 rounded-xl shadow-[0_2px_8px_rgba(124,45,18,0.04)] transition hover:scale-[1.02]">
+        <div class="bg-gradient-to-br from-marca-100 via-marca-200 to-marca-300 rounded-full p-2 mb-2">
+          <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2M12 20c4.418 0 8-3.582 8-8a8 8 0 10-16 0c0 4.418 3.582 8 8 8z"></path></svg>
+        </div>
+        <div class="font-display text-lg text-marca-900">18</div>
+        <div class="text-xs text-marca-700">Finalizados mês</div>
+      </div>
+      <div class="card flex flex-col items-center py-3 bg-marca-100 rounded-xl shadow-[0_2px_8px_rgba(124,45,18,0.04)] transition hover:scale-[1.02]">
+        <div class="bg-gradient-to-br from-marca-100 via-marca-200 to-marca-300 rounded-full p-2 mb-2">
+          <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 17v2a2 2 0 002 2h4a2 2 0 002-2v-2M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 0h6M4 7H3M21 7h-1M5 19h2"></path></svg>
+        </div>
+        <div class="font-display text-lg text-marca-900" id="painel_do_mecanico_comissao_pendente">R$ 1.240</div>
+        <div class="text-xs text-marca-700">Comissão pendente</div>
+      </div>
+    </div>
+    <!-- Mini gráfico: desempenho mensal -->
+    <div class="card rounded-xl bg-marca-100 mb-6 py-3 px-4 shadow-[0_1px_7px_rgba(124,45,18,0.06)]">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-display text-sm text-marca-900">Desempenho Mensal</span>
+        <span class="text-xs text-marca-700">junho/2024</span>
+      </div>
+      <div class="w-full h-20 flex items-center">
+        <svg class="w-full h-16" viewBox="0 0 130 64" preserveAspectRatio="none">
+          <rect x="0" y="0" width="130" height="64" rx="13" fill="#FFF7ED"/>
+          <polyline points="17,58 30,35 48,42 66,28 84,55 102,40 120,37" stroke="#F97316" stroke-width="3" fill="none" />
+          <circle cx="17" cy="58" r="2.5" fill="#F97316"/>
+          <circle cx="30" cy="35" r="2.5" fill="#F97316"/>
+          <circle cx="48" cy="42" r="2.5" fill="#F97316"/>
+          <circle cx="66" cy="28" r="2.5" fill="#F97316"/>
+          <circle cx="84" cy="55" r="2.5" fill="#F97316"/>
+          <circle cx="102" cy="40" r="2.5" fill="#F97316"/>
+          <circle cx="120" cy="37" r="2.5" fill="#F97316"/>
+        </svg>
+      </div>
+      <div class="mt-2 flex justify-between items-center text-xs text-marca-700">
+        <div>Meta: 22</div>
+        <div class="text-marca-900 font-semibold">18 realizados</div>
+        <div><span class="text-marca-600">+3</span> vs mês anterior</div>
+      </div>
+    </div>
+    <!-- Busca e filtros -->
+    <div class="flex items-center gap-2 mb-2">
+      <input id="painel_do_mecanico_busca" type="text" placeholder="Buscar serviço, cliente, modelo..." class="rounded-lg border bg-marca-50 border-marca-200 px-3 py-2 text-sm shadow-[0_1px_3px_rgba(0,0,0,0.03)] focus:outline-none focus:border-marca-400 transition flex-1" />
+      <select id="painel_do_mecanico_filtro_status" class="rounded-lg border bg-marca-50 border-marca-200 px-3 py-2 text-sm shadow-[0_1px_3px_rgba(0,0,0,0.03)] focus:outline-none focus:border-marca-400 transition">
+        <option value="">Todos</option>
+        <option value="aguardando">Aguardando</option>
+        <option value="diagnostico">Em diagnóstico</option>
+        <option value="peca">Aguardando peça</option>
+        <option value="em_andamento">Em andamento</option>
+        <option value="finalizado">Finalizado</option>
+      </select>
+    </div>
+    <!-- Lista de Ordens de Serviço -->
+    <div id="painel_do_mecanico_lista_os">
+    </div>
+    <!-- Empty state -->
+    <div id="painel_do_mecanico_empty_state" class="hidden mt-8 flex flex-col items-center justify-center">
+      <svg class="w-20 h-20 mb-3 text-marca-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 48 48"><rect x="8" y="14" width="32" height="20" rx="5" fill="#FFF7ED" stroke="#F97316"/><path d="M23 26h2v2h-2z" fill="#F97316"/><path d="M18 26h2v2h-2z" fill="#F97316"/><path d="M28 26h2v2h-2z" fill="#F97316"/></svg>
+      <div class="text-marca-700 font-display text-base text-center mb-1">Nenhum serviço encontrado</div>
+      <p class="text-xs text-marca-700 text-center">Tente ajustar a busca ou filtro de status para encontrar suas ordens de serviço.</p>
+    </div>
+    <!-- Navegação inferior -->
+    <nav class="fixed bottom-0 left-0 w-full max-w-[430px] mx-auto bg-marca-100 border-t border-marca-200 z-20">
+      <div class="flex justify-between items-center py-2 px-2">
+        <button type="button" class="flex flex-col items-center flex-1 group" onclick="mostrarTela('painel-do-mecanico')">
+          <svg class="w-6 h-6 mb-1 text-marca-900 group-hover:text-marca-700 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 18H8a2 2 0 01-2-2V8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2z"/></svg>
+          <span class="text-xs text-marca-900 font-medium">Meus Serviços</span>
+        </button>
+        <button type="button" class="flex flex-col items-center flex-1 group" onclick="mostrarTela('checklist-veicular')">
+          <svg class="w-6 h-6 mb-1 text-marca-900 group-hover:text-marca-700 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+          <span class="text-xs text-marca-900 font-medium">Checklist</span>
+        </button>
+        <button type="button" class="flex flex-col items-center flex-1 group" onclick="painel_do_mecanico_abrirHistorico()">
+          <svg class="w-6 h-6 mb-1 text-marca-900 group-hover:text-marca-700 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11.5V7a2 2 0 00-2-2h-2M5 7v10a2 2 0 002 2h10a2 2 0 002-2v-2.5M16 19H8"/></svg>
+          <span class="text-xs text-marca-900 font-medium">Histórico</span>
+        </button>
+        <button type="button" class="flex flex-col items-center flex-1 group" onclick="painel_do_mecanico_abrirComissoes()">
+          <svg class="w-6 h-6 mb-1 text-marca-900 group-hover:text-marca-700 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
+          <span class="text-xs text-marca-900 font-medium">Comissões</span>
+        </button>
+        <button type="button" class="flex flex-col items-center flex-1 group" onclick="painel_do_mecanico_abrirPerfil()">
+          <svg class="w-6 h-6 mb-1 text-marca-900 group-hover:text-marca-700 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15c2.7 0 8 1.35 8 4v-2a8 8 0 10-16 0v2c0-2.65 5.3-4 8-4z"/><circle cx="12" cy="9" r="3"/></svg>
+          <span class="text-xs text-marca-900 font-medium">Perfil</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+  <script>
+const painel_do_mecanico_os = [
+  {
+    id: 10281,
+    numero_os: 'OS-20283',
+    cliente: 'Ana Oliveira',
+    veiculo: 'Hyundai HB20 2018',
+    placa: 'BRM-1015',
+    status: 'aguardando',
+    avatar: 'AO',
+    problema: 'Ruído na suspensão ao passar em lombadas',
+    data: '2024-06-13T08:37:00',
+    acao: 'Iniciar diagnóstico',
+  },
+  {
+    id: 10892,
+    numero_os: 'OS-20449',
+    cliente: 'Lucas Souza',
+    veiculo: 'Chevrolet Onix 2022',
+    placa: 'RFA-5527',
+    status: 'diagnostico',
+    avatar: 'LS',
+    problema: 'Luz do óleo acesa',
+    data: '2024-06-12T09:00:00',
+    acao: 'Atualizar status',
+  },
+  {
+    id: 10421,
+    numero_os: 'OS-20377',
+    cliente: 'Bruna Costa',
+    veiculo: 'Toyota Corolla 2010',
+    placa: 'YPJ-8975',
+    status: 'peca',
+    avatar: 'BC',
+    problema: 'Troca de pastilhas de freio',
+    data: '2024-06-11T12:10:00',
+    acao: 'Atualizar status',
+  },
+  {
+    id: 10752,
+    numero_os: 'OS-20412',
+    cliente: 'Márcio Pereira',
+    veiculo: 'Volkswagen Amarok 2021',
+    placa: 'NMT-6392',
+    status: 'em_andamento',
+    avatar: 'MP',
+    problema: 'Revisão completa',
+    data: '2024-06-10T14:00:00',
+    acao: 'Finalizar serviço',
+  },
+  {
+    id: 10563,
+    numero_os: 'OS-20381',
+    cliente: 'Gabriel Ferreira',
+    veiculo: 'Honda Civic 2015',
+    placa: 'XJD-1553',
+    status: 'finalizado',
+    avatar: 'GF',
+    problema: 'Barulhos ao frear',
+    data: '2024-06-08T11:50:00',
+    acao: 'Visualizar',
+  },
+  {
+    id: 10915,
+    numero_os: 'OS-20468',
+    cliente: 'Tatiane Silva',
+    veiculo: 'Ford Ecosport 2019',
+    placa: 'JJI-1920',
+    status: 'em_andamento',
+    avatar: 'TS',
+    problema: 'Troca de correia dentada',
+    data: '2024-06-12T16:20:00',
+    acao: 'Finalizar serviço',
+  },
+  {
+    id: 10801,
+    numero_os: 'OS-20433',
+    cliente: 'Enzo Ramos',
+    veiculo: 'Fiat Toro 2023',
+    placa: 'MND-2207',
+    status: 'peca',
+    avatar: 'ER',
+    problema: 'Troca de batente com amortecedor',
+    data: '2024-06-09T08:45:00',
+    acao: 'Atualizar status',
+  },
+  {
+    id: 10699,
+    numero_os: 'OS-20407',
+    cliente: 'Adriana Rocha',
+    veiculo: 'Renault Kwid 2020',
+    placa: 'UZZ-8177',
+    status: 'aguardando',
+    avatar: 'AR',
+    problema: 'Troca de óleo e filtro',
+    data: '2024-06-13T07:35:00',
+    acao: 'Iniciar diagnóstico',
+  }
+];
+
+const painel_do_mecanico_status_badges = {
+  'aguardando': { text: 'Aguardando', color: 'bg-marca-50 text-marca-900 border border-marca-300' },
+  'diagnostico': { text: 'Em diagnóstico', color: 'bg-marca-200 text-marca-900 border border-marca-300' },
+  'peca': { text: 'Aguardando peça', color: 'bg-marca-200 text-marca-900 border border-marca-300' },
+  'em_andamento': { text: 'Em andamento', color: 'bg-marca-300 text-marca-900 border border-m
+
     <!-- TELAS -->
         </div>
       </main>
