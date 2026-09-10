@@ -1097,6 +1097,601 @@
       </div>
     </section>
 
+    <section data-tela="detalhe-da-os" class="hidden">
+  <div class="fade-in">
+    <!-- Cabeçalho da OS -->
+    <div class="bg-marca-900 px-4 pt-4 pb-5 text-white">
+      <div class="flex items-center justify-between mb-3">
+        <button onclick="mostrarTela('ordens-de-servico')" class="p-1.5 -ml-1.5 active:scale-90 transition-transform" aria-label="Voltar">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="detalhe_da_os_compartilhar()" class="p-1.5 active:scale-90 transition-transform" aria-label="Compartilhar">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+          </button>
+          <button onclick="detalhe_da_os_editar()" class="p-1.5 active:scale-90 transition-transform" aria-label="Editar OS">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="flex items-start justify-between">
+        <div>
+          <p class="text-marca-200 text-xs font-medium uppercase tracking-wider mb-0.5">Ordem de Serviço</p>
+          <h1 class="font-display text-2xl font-bold tracking-tight">OS-0147</h1>
+          <p class="text-marca-200 text-xs mt-0.5">Aberta em 15/01/2025 às 08:32</p>
+        </div>
+        <span id="os-status-badge" class="badge badge-orange text-xs px-2.5 py-1 rounded-full font-medium mt-1">Em andamento</span>
+      </div>
+    </div>
+
+    <!-- Info rápida: Cliente / Veículo / Mecânico -->
+    <div class="px-4 py-3 bg-white border-b border-gray-100">
+      <div class="flex gap-3">
+        <div class="flex-1 card bg-gray-50 rounded-xl p-3 border border-gray-100">
+          <div class="flex items-center gap-2 mb-1.5">
+            <div class="w-7 h-7 rounded-full bg-marca-100 flex items-center justify-center">
+              <svg class="w-3.5 h-3.5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </div>
+            <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium">Cliente</span>
+          </div>
+          <p class="font-semibold text-sm text-gray-900 truncate">João Silva</p>
+          <p class="text-xs text-gray-500">(11) 98765-4321</p>
+        </div>
+        <div class="flex-1 card bg-gray-50 rounded-xl p-3 border border-gray-100">
+          <div class="flex items-center gap-2 mb-1.5">
+            <div class="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center">
+              <svg class="w-3.5 h-3.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8m-8 4h8m-8 4h4M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+            </div>
+            <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium">Veículo</span>
+          </div>
+          <p class="font-semibold text-sm text-gray-900 truncate">Honda Civic</p>
+          <p class="text-xs text-gray-500">2022 · ABC-1D23</p>
+        </div>
+      </div>
+      <div class="mt-2.5 card bg-gray-50 rounded-xl p-3 border border-gray-100">
+        <div class="flex items-center gap-2 mb-1">
+          <div class="w-7 h-7 rounded-full bg-marca-100 flex items-center justify-center">
+            <svg class="w-3.5 h-3.5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <span class="text-[10px] uppercase tracking-wider text-gray-400 font-medium">Mecânico Responsável</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-marca-700 flex items-center justify-center text-white text-xs font-bold">CM</div>
+          <div>
+            <p class="font-semibold text-sm text-gray-900">Carlos Mendes</p>
+            <p class="text-xs text-gray-500">Especialista em motor · 8 anos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indicadores rápidos -->
+    <div class="px-4 py-3 grid grid-cols-3 gap-2 bg-gray-50">
+      <div class="card bg-white rounded-xl p-3 text-center border border-gray-100">
+        <p class="text-xl font-bold text-gray-900">3</p>
+        <p class="text-[10px] text-gray-500 uppercase tracking-wide mt-0.5">Serviços</p>
+      </div>
+      <div class="card bg-white rounded-xl p-3 text-center border border-gray-100">
+        <p class="text-xl font-bold text-gray-900">5</p>
+        <p class="text-[10px] text-gray-500 uppercase tracking-wide mt-0.5">Peças</p>
+      </div>
+      <div class="card bg-white rounded-xl p-3 text-center border border-gray-100">
+        <p class="text-lg font-bold text-marca-700">R$ 1.890</p>
+        <p class="text-[10px] text-gray-500 uppercase tracking-wide mt-0.5">Total</p>
+      </div>
+    </div>
+
+    <!-- Abas -->
+    <div class="sticky top-0 z-10 bg-white border-b border-gray-100">
+      <div class="flex overflow-x-auto no-scrollbar" id="os-abas">
+        <button onclick="detalhe_da_os_aba('dados')" data-aba="dados" class="os-aba-btn flex-shrink-0 px-4 py-3 text-sm font-medium border-b-2 border-marca-700 text-marca-800 transition-colors">Dados</button>
+        <button onclick="detalhe_da_os_aba('servicos')" data-aba="servicos" class="os-aba-btn flex-shrink-0 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-400 transition-colors">Serviços</button>
+        <button onclick="detalhe_da_os_aba('pecas')" data-aba="pecas" class="os-aba-btn flex-shrink-0 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-400 transition-colors">Peças</button>
+        <button onclick="detalhe_da_os_aba('fotos')" data-aba="fotos" class="os-aba-btn flex-shrink-0 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-400 transition-colors">Fotos</button>
+        <button onclick="detalhe_da_os_aba('timeline')" data-aba="timeline" class="os-aba-btn flex-shrink-0 px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-400 transition-colors">Timeline</button>
+      </div>
+    </div>
+
+    <!-- Conteúdo das Abas -->
+    <div class="px-4 py-4 pb-28">
+
+      <!-- ABA: Dados -->
+      <div id="os-conteudo-dados" class="os-conteudo">
+        <div class="space-y-3">
+          <div class="card bg-white rounded-xl p-4 border border-gray-100">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-6 h-6 rounded-md bg-red-50 flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+              </div>
+              <h3 class="font-semibold text-sm text-gray-900">Problema Relatado</h3>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed">O veículo está apresentando ruído metálico no motor quando acelera acima de 3.000 RPM. O problema começou há cerca de uma semana e está piorando. Já verificou-se o nível de óleo e está correto.</p>
+          </div>
+
+          <div class="card bg-white rounded-xl p-4 border border-gray-100">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-6 h-6 rounded-md bg-blue-50 flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+              </div>
+              <h3 class="font-semibold text-sm text-gray-900">Diagnóstico</h3>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed">Realizado teste de compressão nos 4 cilindros. Cilindro 3 apresentou compressão 30% abaixo do esperado. Suspeita de vazamento na junta do cabeçote. Necessária substituição da junta e retífica do cabeçote.</p>
+          </div>
+
+          <div class="card bg-white rounded-xl p-4 border border-gray-100">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-6 h-6 rounded-md bg-gray-100 flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </div>
+              <h3 class="font-semibold text-sm text-gray-900">Observações</h3>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed">Cliente autorizou orçamento prévio por telefone. Aguardando aprovação para início dos serviços. Veículo será deixado na oficina. Chaves ficam com a recepção.</p>
+          </div>
+
+          <div class="card bg-white rounded-xl p-4 border border-gray-100">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <p class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mb-0.5">Quilometragem</p>
+                <p class="text-sm font-semibold text-gray-900">78.450 km</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mb-0.5">Combustível</p>
+                <p class="text-sm font-semibold text-gray-900">1/4 tanque</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mb-0.5">Garantia</p>
+                <p class="text-sm font-semibold text-gray-900">3 meses</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-wider text-gray-400 font-medium mb-0.5">Prioridade</p>
+                <p class="text-sm font-semibold text-yellow-600">Média</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA: Serviços -->
+      <div id="os-conteudo-servicos" class="os-conteudo hidden">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-semibold text-sm text-gray-900">Serviços Cadastrados</h3>
+          <button onclick="detalhe_da_os_addServico()" class="btn bg-marca-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium active:scale-95 transition-transform flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div id="os-lista-servicos" class="space-y-2.5">
+          <div class="card bg-white rounded-xl p-3.5 border border-gray-100 flex items-start justify-between">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-marca-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-gray-900">Substituição da junta do cabeçote</p>
+                <p class="text-xs text-gray-500 mt-0.5">Mão de obra · 8 horas estimadas</p>
+              </div>
+            </div>
+            <p class="text-sm font-bold text-marca-700">R$ 800,00</p>
+          </div>
+          <div class="card bg-white rounded-xl p-3.5 border border-gray-100 flex items-start justify-between">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-gray-900">Retífica do cabeçote</p>
+                <p class="text-xs text-gray-500 mt-0.5">Mão de obra · 6 horas estimadas</p>
+              </div>
+            </div>
+            <p class="text-sm font-bold text-marca-700">R$ 600,00</p>
+          </div>
+          <div class="card bg-white rounded-xl p-3.5 border border-gray-100 flex items-start justify-between">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-marca-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-semibold text-gray-900">Troca de kit de correia</p>
+                <p class="text-xs text-gray-500 mt-0.5">Mão de obra · 2 horas estimadas</p>
+              </div>
+            </div>
+            <p class="text-sm font-bold text-marca-700">R$ 250,00</p>
+          </div>
+        </div>
+        <!-- Resumo financeiro serviços -->
+        <div class="mt-4 card bg-marca-50 rounded-xl p-4 border border-marca-100">
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-sm text-gray-600">Subtotal mão de obra</span>
+            <span class="text-sm font-semibold text-gray-900">R$ 1.650,00</span>
+          </div>
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-sm text-gray-600">Peças</span>
+            <span class="text-sm font-semibold text-gray-900">R$ 240,00</span>
+          </div>
+          <div class="border-t border-marca-200 mt-2 pt-2 flex justify-between items-center">
+            <span class="text-sm font-bold text-gray-900">Total da OS</span>
+            <span class="text-lg font-bold text-marca-800">R$ 1.890,00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA: Peças -->
+      <div id="os-conteudo-pecas" class="os-conteudo hidden">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-semibold text-sm text-gray-900">Peças Utilizadas</h3>
+          <button onclick="detalhe_da_os_addPeca()" class="btn bg-marca-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium active:scale-95 transition-transform flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div id="os-lista-pecas" class="space-y-2.5">
+          <div class="card bg-white rounded-xl p-3.5 border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="text-sm font-semibold text-gray-900">Junta do cabeçote</p>
+                  <span class="badge badge-green text-[10px] px-1.5 py-0.5 rounded-full font-medium">Em estoque</span>
+                </div>
+                <p class="text-xs text-gray-500">Código: JCH-014 · Marca: Metal Leve</p>
+                <div class="flex items-center gap-3 mt-1.5">
+                  <span class="text-xs text-gray-500">Qtd: <strong class="text-gray-700">1</strong></span>
+                  <span class="text-xs text-gray-500">Unit.: <strong class="text-gray-700">R$ 85,00</strong></span>
+                </div>
+              </div>
+              <p class="text-sm font-bold text-gray-900 ml-2">R$ 85,00</p>
+            </div>
+          </div>
+          <div class="card bg-white rounded-xl p-3.5 border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="text-sm font-semibold text-gray-900">Kit correia dentada</p>
+                  <span class="badge badge-green text-[10px] px-1.5 py-0.5 rounded-full font-medium">Em estoque</span>
+                </div>
+                <p class="text-xs text-gray-500">Código: KCD-022 · Marca: Gates</p>
+                <div class="flex items-center gap-3 mt-1.5">
+                  <span class="text-xs text-gray-500">Qtd: <strong class="text-gray-700">1</strong></span>
+                  <span class="text-xs text-gray-500">Unit.: <strong class="text-gray-700">R$ 155,00</strong></span>
+                </div>
+              </div>
+              <p class="text-sm font-bold text-gray-900 ml-2">R$ 155,00</p>
+            </div>
+          </div>
+          <div class="card bg-white rounded-xl p-3.5 border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="text-sm font-semibold text-gray-900">Óleo motor 5W30 4L</p>
+                  <span class="badge badge-green text-[10px] px-1.5 py-0.5 rounded-full font-medium">Em estoque</span>
+                </div>
+                <p class="text-xs text-gray-500">Código: OLM-055 · Marca: Mobil 1</p>
+                <div class="flex items-center gap-3 mt-1.5">
+                  <span class="text-xs text-gray-500">Qtd: <strong class="text-gray-700">1</strong></span>
+                  <span class="text-xs text-gray-500">Unit.: <strong class="text-gray-700">R$ 65,00</strong></span>
+                </div>
+              </div>
+              <p class="text-sm font-bold text-gray-900 ml-2">R$ 65,00</p>
+            </div>
+          </div>
+          <div class="card bg-white rounded-xl p-3.5 border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="text-sm font-semibold text-gray-900">Filtro de óleo</p>
+                  <span class="badge badge-green text-[10px] px-1.5 py-0.5 rounded-full font-medium">Em estoque</span>
+                </div>
+                <p class="text-xs text-gray-500">Código: FIL-089 · Marca: Mann</p>
+                <div class="flex items-center gap-3 mt-1.5">
+                  <span class="text-xs text-gray-500">Qtd: <strong class="text-gray-700">1</strong></span>
+                  <span class="text-xs text-gray-500">Unit.: <strong class="text-gray-700">R$ 28,00</strong></span>
+                </div>
+              </div>
+              <p class="text-sm font-bold text-gray-900 ml-2">R$ 28,00</p>
+            </div>
+          </div>
+          <div class="card bg-white rounded-xl p-3.5 border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <p class="text-sm font-semibold text-gray-900">Parafusos cabeçote (kit)</p>
+                  <span class="badge badge-green text-[10px] px-1.5 py-0.5 rounded-full font-medium">Em estoque</span>
+                </div>
+                <p class="text-xs text-gray-500">Código: PRF-101 · Marca: N Genuine</p>
+                <div class="flex items-center gap-3 mt-1.5">
+                  <span class="text-xs text-gray-500">Qtd: <strong class="text-gray-700">1</strong></span>
+                  <span class="text-xs text-gray-500">Unit.: <strong class="text-gray-700">R$ 120,00</strong></span>
+                </div>
+              </div>
+              <p class="text-sm font-bold text-gray-900 ml-2">R$ 120,00</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA: Fotos -->
+      <div id="os-conteudo-fotos" class="os-conteudo hidden">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-semibold text-sm text-gray-900">Galeria de Fotos</h3>
+          <button onclick="detalhe_da_os_addFoto()" class="btn bg-marca-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium active:scale-95 transition-transform flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Adicionar
+          </button>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5" id="os-galeria-fotos">
+          <div onclick="detalhe_da_os_verFoto(this)" class="aspect-square rounded-xl bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center cursor-pointer active:scale-95 transition-transform border-2 border-transparent hover:border-marca-300">
+            <div class="text-center">
+              <svg class="w-8 h-8 text-gray-400 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span class="text-[10px] text-gray-500 font-medium">Motor - entrada</span>
+            </div>
+          </div>
+          <div onclick="detalhe_da_os_verFoto(this)" class="aspect-square rounded-xl bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center cursor-pointer active:scale-95 transition-transform border-2 border-transparent hover:border-marca-300">
+            <div class="text-center">
+              <svg class="w-8 h-8 text-gray-400 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span class="text-[10px] text-gray-500 font-medium">Junta danificada</span>
+            </div>
+          </div>
+          <div onclick="detalhe_da_os_verFoto(this)" class="aspect-square rounded-xl bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center cursor-pointer active:scale-95 transition-transform border-2 border-transparent hover:border-marca-300">
+            <div class="text-center">
+              <svg class="w-8 h-8 text-orange-400 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span class="text-[10px] text-gray-500 font-medium">Após limpeza</span>
+            </div>
+          </div>
+          <div onclick="detalhe_da_os_verFoto(this)" class="aspect-square rounded-xl bg-gradient-to-br from-marca-100 to-marca-200 flex items-center justify-center cursor-pointer active:scale-95 transition-transform border-2 border-transparent hover:border-marca-300">
+            <div class="text-center">
+              <svg class="w-8 h-8 text-marca-400 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span class="text-[10px] text-gray-500 font-medium">Junta nova instalada</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 text-center mt-3">Toque na foto para ampliar</p>
+      </div>
+
+      <!-- ABA: Timeline -->
+      <div id="os-conteudo-timeline" class="os-conteudo hidden">
+        <h3 class="font-semibold text-sm text-gray-900 mb-3">Histórico de Alterações</h3>
+        <div class="relative pl-6">
+          <div class="absolute left-2 top-2 bottom-2 w-0.5 bg-gray-200"></div>
+          <div class="space-y-4">
+            <div class="relative">
+              <div class="absolute -left-4 top-1 w-3 h-3 rounded-full bg-marca-700 border-2 border-white shadow-sm"></div>
+              <div class="card bg-white rounded-lg p-3 border border-gray-100">
+                <div class="flex items-center justify-between mb-0.5">
+                  <span class="text-xs font-semibold text-marca-700">Em andamento</span>
+                  <span class="text-[10px] text-gray-400">15/01 · 14:20</span>
+                </div>
+                <p class="text-xs text-gray-600">Diagnóstico concluído. Iniciada troca da junta do cabeçote. Carlos Mendes assumiu o serviço.</p>
+              </div>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-4 top-1 w-3 h-3 rounded-full bg-yellow-500 border-2 border-white shadow-sm"></div>
+              <div class="card bg-white rounded-lg p-3 border border-gray-100">
+                <div class="flex items-center justify-between mb-0.5">
+                  <span class="text-xs font-semibold text-yellow-700">Em diagnóstico</span>
+                  <span class="text-[10px] text-gray-400">15/01 · 11:00</span>
+                </div>
+                <p class="text-xs text-gray-600">Veículo em análise. Carlos Mendes iniciou exames.</p>
+              </div>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-4 top-1 w-3 h-3 rounded-full bg-blue-500 border-2 border-white shadow-sm"></div>
+              <div class="card bg-white rounded-lg p-3 border border-gray-100">
+                <div class="flex items-center justify-between mb-0.5">
+                  <span class="text-xs font-semibold text-blue-700">Aguardando</span>
+                  <span class="text-[10px] text-gray-400">15/01 · 08:32</span>
+                </div>
+                <p class="text-xs text-gray-600">OS criada. Veículo deu entrada na oficina. Atendente: Maria Souza.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de ações fixa -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 px-4 py-3 z-50">
+      <div class="max-w-[430px] mx-auto flex gap-2">
+        <button onclick="detalhe_da_os_iniciarDiagnostico()" class="btn flex-1 bg-marca-700 text-white text-sm font-semibold py-3 rounded-xl active:scale-95 transition-transform">Iniciar Diagnóstico</button>
+        <button onclick="detalhe_da_os_orcamento()" class="btn bg-white border-2 border-marca-700 text-marca-700 text-sm font-semibold py-3 px-4 rounded-xl active:scale-95 transition-transform">Orçamento</button>
+      </div>
+      <div class="max-w-[430px] mx-auto flex gap-2 mt-2">
+        <button onclick="detalhe_da_os_finalizar()" class="btn flex-1 bg-gray-100 text-gray-700 text-sm font-semibold py-3 rounded-xl active:scale-95 transition-transform border border-gray-200">Finalizar OS</button>
+        <button onclick="detalhe_da_os_entregar()" class="btn flex-1 bg-orange-500 text-white text-sm font-semibold py-3 rounded-xl active:scale-95 transition-transform">Entregar Veículo</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const _ = detalhe_da_os_;
+
+  function detalhe_da_os_aba(nome) {
+    document.querySelectorAll('.os-aba-btn').forEach(b => {
+      b.classList.remove('border-marca-700','text-marca-800');
+      b.classList.add('border-transparent','text-gray-400');
+    });
+    document.querySelectorAll('.os-conteudo').forEach(c => c.classList.add('hidden'));
+    const btn = document.querySelector(`.os-aba-btn[data-aba="${nome}"]`);
+    if (btn) {
+      btn.classList.remove('border-transparent','text-gray-400');
+      btn.classList.add('border-marca-700','text-marca-800');
+    }
+    const conteudo = document.getElementById(`os-conteudo-${nome}`);
+    if (conteudo) conteudo.classList.remove('hidden');
+  }
+
+  function detalhe_da_os_iniciarDiagnostico() {
+    abrirModal(`
+      <div class="text-center py-2">
+        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+        </div>
+        <p class="text-sm text-gray-600 mb-1">Iniciar diagnóstico para <strong>OS-0147</strong>?</p>
+        <p class="text-xs text-gray-400">Carlos Mendes será notificado para começar a análise.</p>
+      </div>
+    `, 'Iniciar Diagnóstico');
+    setTimeout(() => {
+      const btns = document.querySelectorAll('.modal-footer .btn');
+      if (btns[0]) {
+        btns[0].onclick = function() {
+          fecharModal();
+          detalhe_da_os_mudarStatus('Em diagnóstico');
+          toast('Diagnóstico iniciado. Mecânico notificado.', 'ok');
+        };
+      }
+    }, 50);
+  }
+
+  function detalhe_da_os_orcamento() {
+    mostrarTela('orcamento-do-cliente');
+  }
+
+  function detalhe_da_os_finalizar() {
+    abrirModal(`
+      <div class="text-center py-2">
+        <div class="w-12 h-12 rounded-full bg-marca-100 flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <p class="text-sm text-gray-600 mb-1">Marcar <strong>OS-0147</strong> como finalizada?</p>
+        <p class="text-xs text-gray-400">O cliente será notificado para retirar o veículo.</p>
+      </div>
+    `, 'Finalizar Ordem de Serviço');
+    setTimeout(() => {
+      const btns = document.querySelectorAll('.modal-footer .btn');
+      if (btns[0]) {
+        btns[0].onclick = function() {
+          fecharModal();
+          detalhe_da_os_mudarStatus('Finalizado');
+          toast('OS finalizada com sucesso!', 'ok');
+        };
+      }
+    }, 50);
+  }
+
+  function detalhe_da_os_entregar() {
+    mostrarTela('financeiro');
+  }
+
+  function detalhe_da_os_mudarStatus(novo) {
+    const badge = document.getElementById('os-status-badge');
+    if (!badge) return;
+    const cores = {
+      'Aguardando': 'bg-yellow-100 text-yellow-700',
+      'Em diagnóstico': 'bg-blue-100 text-blue-700',
+      'Em andamento': 'bg-orange-100 text-orange-700',
+      'Finalizado': 'bg-marca-100 text-marca-700',
+      'Entregue': 'bg-green-100 text-green-700'
+    };
+    badge.className = `text-xs px-2.5 py-1 rounded-full font-medium mt-1 ${cores[novo] || 'bg-gray-100 text-gray-700'}`;
+    badge.textContent = novo;
+  }
+
+  function detalhe_da_os_addServico() {
+    abrirModal(`
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Descrição do serviço</label>
+          <input type="text" placeholder="Ex: Troca de óleo" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-400">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Mão de obra (R$)</label>
+          <input type="text" placeholder="0,00" oninput="this.value = this.value.replace(/[^0-9]/g,'')" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-400">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Horas estimadas</label>
+          <input type="number" placeholder="0" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-400">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Observações</label>
+          <textarea rows="2" placeholder="Detalhes adicionais..." class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-400 resize-none"></textarea>
+        </div>
+      </div>
+    `, 'Adicionar Serviço');
+    setTimeout(() => {
+      const btns = document.querySelectorAll('.modal-footer .btn');
+      if (btns[0]) {
+        btns[0].onclick = function() {
+          fecharModal();
+          toast('Serviço adicionado à OS-0147.', 'ok');
+        };
+      }
+    }, 50);
+  }
+
+  function detalhe_da_os_addPeca() {
+    abrirModal(`
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Peça</label>
+          <select class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-400 bg-white">
+            <option>Selecione uma peça...</option>
+            <option>Junta do cabeçote</option>
+            <option>Kit correia dentada</option>
+            <option>Óleo motor 5W30</option>
+            <option>Filtro de óleo</option>
+            <option>Parafusos cabeçote (kit)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Quantidade</label>
+          <input type="number" value="1" min="1" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-400">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Valor unitário (R$)</label>
+          <input type="text" placeholder="0,00" oninput="this.value = this.value.replace(/[^0-9]/g,'')" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-400">
+        </div>
+      </div>
+    `, 'Adicionar Peça');
+    setTimeout(() => {
+      const btns = document.querySelectorAll('.modal-footer .btn');
+      if (btns[0]) {
+        btns[0].onclick = function() {
+          fecharModal();
+          toast('Peça adicionada à OS-0147.', 'ok');
+        };
+      }
+    }, 50);
+  }
+
+  function detalhe_da_os_addFoto() {
+    abrirModal(`
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Descrição da foto</label>
+          <input type="text" placeholder="Ex: Após retífica" class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-marca-400">
+        </div>
+        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center cursor-pointer hover:border-marca-400 transition-colors" onclick="toast('Camera/galeria não disponível no protótipo', 'info')">
+          <svg class="w-10 h-10 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <p class="text-xs text-gray-500">Toque para tirar foto ou escolher da galeria</p>
+        </div>
+      </div>
+    `, 'Adicionar Foto');
+  }
+
+  function detalhe_da_os_verFoto(el) {
+    const corBg = el.className.includes('orange') ? 'from-orange-100 to-orange-200' : el.className.includes('marca') ? 'from-marca-100 to-marca-200' : 'from-gray-200 to-gray-300';
+    const desc = el.querySelector('span') ? el.querySelector('span').textContent : 'Foto';
+    abrirModal(`
+      <div class="text-center">
+        <div class="aspect-square w-full rounded-xl bg-gradient-to-br ${corBg} flex items-center justify-center mb-3">
+          <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+        <p class="text-sm font-semibold text-gray-900">${desc}</p>
+        <p class="text-xs text-gray-500 mt-1">Adicionada em 15/01/2025</p>
+      </div>
+    `, 'Visualizar Foto');
+  }
+
+  function detalhe_da_os_compartilhar() {
+    toast('Link da OS-0147 copiado para a área de transferência.', 'ok');
+  }
+
+  function detalhe_da_os_editar() {
+    toast('Modo de edição ativado para OS-0147.', 'info');
+  }
+})();
+</script>
+
     <!-- TELAS -->
         </div>
       </main>
