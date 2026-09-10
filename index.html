@@ -2244,7 +2244,283 @@ const painel_do_mecanico_status_badges = {
                             <p class="text-xs text-gray-500">Óleo 5W30 + filtro</p>
                         </div>
                     </div>
-                    <span class="text-sm font-bold text-marca-900">R<!-- TELAS -->nbsp;80,00</span>
+                    <span class="text-sm font-bold text-marca-900">R<section data-tela="acompanhar-servico" class="hidden">
+  <div class="px-5 pt-2 pb-24 space-y-5">
+    <!-- Header -->
+    <div>
+      <p class="text-sm text-gray-500 font-body">Ordem de Serviço</p>
+      <h1 class="text-2xl font-display font-bold text-marca-900">Acompanhar Serviço</h1>
+      <p class="text-sm text-gray-400 font-body mt-0.5">OS #2847 — VW Gol 1.6 MSI</p>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-xs text-gray-400 uppercase tracking-wider font-medium">Cliente</p>
+          <p class="font-display font-semibold text-gray-800">Carlos Eduardo Lima</p>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-marca-100 flex items-center justify-center text-marca-700 font-display font-bold text-sm">CL</div>
+      </div>
+      <div class="h-px bg-gray-100"></div>
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-xs text-gray-400 uppercase tracking-wider font-medium">Veículo</p>
+          <p class="font-display font-semibold text-gray-800">VW Gol 1.6 MSI, 2019</p>
+          <p class="text-xs text-gray-500">Placa: BRA2E19 • Preto • 82.450 km</p>
+        </div>
+        <button onclick="mostrarTela('detalhe-da-os')" class="text-marca-600 hover:text-marca-700 p-2 rounded-lg hover:bg-marca-50 transition active:scale-95">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div>
+      <h2 class="text-base font-display font-semibold text-gray-800 mb-3">Progresso do Serviço</h2>
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div class="relative" id="timeline">
+          <!-- Etapa 1: Recebido -->
+          <div class="flex gap-3">
+            <div class="flex flex-col items-center">
+              <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <div class="w-0.5 h-full bg-gray-200 min-h-[40px]"></div>
+            </div>
+            <div class="pb-5">
+              <p class="text-sm font-display font-semibold text-green-700">Recebido</p>
+              <p class="text-xs text-gray-400">10/02/2025 • 09:15</p>
+              <p class="text-xs text-gray-500 mt-0.5">Veículo deu entrada na oficina</p>
+            </div>
+          </div>
+          <!-- Etapa 2: Em diagnóstico -->
+          <div class="flex gap-3">
+            <div class="flex flex-col items-center">
+              <div class="w-8 h-8 rounded-full bg-marca-600 flex items-center justify-center flex-shrink-0 animate-pulse">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </div>
+              <div class="w-0.5 h-full bg-gray-200 min-h-[40px]"></div>
+            </div>
+            <div class="pb-5">
+              <p class="text-sm font-display font-semibold text-marca-700">Em diagnóstico</p>
+              <p class="text-xs text-gray-400">10/02/2025 • 10:30</p>
+              <p class="text-xs text-gray-500 mt-0.5">Mecânico realizando vistoria</p>
+            </div>
+          </div>
+          <!-- Etapa 3: Aguardando peças -->
+          <div class="flex gap-3">
+            <div class="flex flex-col items-center">
+              <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div class="w-0.5 h-full bg-gray-200 min-h-[40px]"></div>
+            </div>
+            <div class="pb-5">
+              <p class="text-sm font-display font-semibold text-gray-400">Aguardando peças</p>
+              <p class="text-xs text-gray-300">Pendente</p>
+            </div>
+          </div>
+          <!-- Etapa 4: Em andamento -->
+          <div class="flex gap-3">
+            <div class="flex flex-col items-center">
+              <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div class="w-0.5 h-full bg-gray-200 min-h-[40px]"></div>
+            </div>
+            <div class="pb-5">
+              <p class="text-sm font-display font-semibold text-gray-400">Em andamento</p>
+              <p class="text-xs text-gray-300">Pendente</p>
+            </div>
+          </div>
+          <!-- Etapa 5: Finalizado -->
+          <div class="flex gap-3">
+            <div class="flex flex-col items-center">
+              <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div class="w-0.5 h-full bg-gray-200 min-h-[40px]"></div>
+            </div>
+            <div>
+              <p class="text-sm font-display font-semibold text-gray-400">Finalizado</p>
+              <p class="text-xs text-gray-300">Pendente</p>
+            </div>
+          </div>
+          <!-- Etapa 6: Entregue -->
+          <div class="flex gap-3">
+            <div class="flex flex-col items-center">
+              <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              </div>
+            </div>
+            <div>
+              <p class="text-sm font-display font-semibold text-gray-400">Entregue</p>
+              <p class="text-xs text-gray-300">Pendente</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fotos da Inspeção -->
+    <div>
+      <h2 class="text-base font-display font-semibold text-gray-800 mb-3">Fotos da Inspeção</h2>
+      <div class="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1" style="scrollbar-width:none;">
+        <button onclick="acompanhar_servico_abrirFoto('Vazamento visível no coxim do motor, área próxima à bomba d\'água','10/02 09:45')" class="flex-shrink-0 w-36 h-36 rounded-xl bg-gradient-to-br from-gray-300 to-gray-500 flex flex-col items-center justify-center gap-1 hover:scale-105 transition active:scale-95 shadow-sm">
+          <svg class="w-8 h-8 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span class="text-[10px] text-white/90 font-medium px-2 text-center leading-tight">Motor — vazamento</span>
+        </button>
+        <button onclick="acompanhar_servico_abrirFoto('Sistema de arrefecimento com baixa pressão, mangueira danificada','10/02 09:52')" class="flex-shrink-0 w-36 h-36 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 flex flex-col items-center justify-center gap-1 hover:scale-105 transition active:scale-95 shadow-sm">
+          <svg class="w-8 h-8 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span class="text-[10px] text-white/90 font-medium px-2 text-center leading-tight">Mangueira danificada</span>
+        </button>
+        <button onclick="acompanhar_servico_abrirFoto('Radiador com pequena trinca lateral, precisa troca','10/02 10:15')" class="flex-shrink-0 w-36 h-36 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex flex-col items-center justify-center gap-1 hover:scale-105 transition active:scale-95 shadow-sm">
+          <svg class="w-8 h-8 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span class="text-[10px] text-white/90 font-medium px-2 text-center leading-tight">Radiador — trinca</span>
+        </button>
+        <button onclick="acompanhar_servico_abrirFoto('Bomba d\'água com vazamento, selo principal danificado','10/02 10:28')" class="flex-shrink-0 w-36 h-36 rounded-xl bg-gradient-to-br from-marca-500 to-marca-700 flex flex-col items-center justify-center gap-1 hover:scale-105 transition active:scale-95 shadow-sm">
+          <svg class="w-8 h-8 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span class="text-[10px] text-white/90 font-medium px-2 text-center leading-tight">Bomba d'água</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Atualizações -->
+    <div>
+      <h2 class="text-base font-display font-semibold text-gray-800 mb-3">Atualizações</h2>
+      <div class="space-y-3">
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-2 h-2 rounded-full bg-marca-500"></div>
+            <span class="text-xs text-marca-600 font-medium">Diagnóstico — 10/02, 10:30</span>
+          </div>
+          <p class="text-sm text-gray-700 leading-relaxed">Identificado vazamento na bomba d'água com dano no selo principal. Mangueira superior do sistema de arrefecimento com desgaste. Radiador com trinca lateral. Necessária troca dos três componentes.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-2 h-2 rounded-full bg-orange-400"></div>
+            <span class="text-xs text-orange-600 font-medium">Peça solicitada — 10/02, 11:00</span>
+          </div>
+          <p class="text-sm text-gray-700 leading-relaxed">Peças solicitadas ao fornecedor: bomba d'água (VW), mangueira superior e radiador. Previsão de chegada: 12/02/2025.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+          <div class="flex items-center gap-2 mb-1">
+            <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+            <span class="text-xs text-gray-400 font-medium">Recebimento — 10/02, 09:15</span>
+          </div>
+          <p class="text-sm text-gray-500 leading-relaxed">Veículo deu entrada na oficina. Cliente relatou superaquecimento e perda de líquido de arrefecimento.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Orçamento disponível -->
+    <div id="orcamento-banner" class="bg-gradient-to-r from-marca-50 to-orange-50 rounded-2xl p-4 border border-marca-100">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-full bg-marca-100 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        </div>
+        <div>
+          <p class="text-sm font-display font-semibold text-marca-800">Orçamento disponível</p>
+          <p class="text-xs text-marca-600">R$ 1.850,00 — válido até 12/02</p>
+        </div>
+      </div>
+      <button onclick="acompanhar_servico_abrirOrcamento()" class="w-full bg-marca-700 text-white font-display font-semibold text-sm py-3 rounded-xl hover:bg-marca-800 transition active:scale-95 shadow-md shadow-marca-700/20">
+        Ver e aprovar orçamento
+      </button>
+    </div>
+  </div>
+
+  <!-- Sticky Bottom Bar -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-gray-100 px-5 py-3 flex gap-3 z-40" style="max-width:430px;margin:0 auto;">
+    <button onclick="acompanhar_servico_contatoWhatsApp()" class="flex-1 bg-green-600 text-white font-display font-semibold text-sm py-3 rounded-xl hover:bg-green-700 transition active:scale-95 flex items-center justify-center gap-2 shadow-md shadow-green-600/20">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </button>
+    <button onclick="mostrarTela('orcamento-do-cliente')" class="flex-1 bg-marca-600 text-white font-display font-semibold text-sm py-3 rounded-xl hover:bg-marca-700 transition active:scale-95 shadow-md shadow-marca-600/20">
+      Orçamento
+    </button>
+  </div>
+
+  <!-- Modal Foto -->
+  <div id="modal-foto" class="hidden fixed inset-0 z-50 flex items-center justify-center p-6" style="max-width:430px;margin:0 auto;left:50%;transform:translateX(-50%);">
+    <div class="absolute inset-0 bg-black/80" onclick="acompanhar_servico_fecharModalFoto()"></div>
+    <div class="relative bg-white rounded-2xl p-5 w-full max-w-sm shadow-2xl">
+      <button onclick="acompanhar_servico_fecharModalFoto()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition">
+        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div id="modal-foto-conteudo" class="space-y-3">
+        <div class="w-full h-48 rounded-xl bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center">
+          <svg class="w-12 h-12 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+        <p id="modal-foto-legenda" class="text-sm text-gray-600 leading-relaxed"></p>
+        <p id="modal-foto-data" class="text-xs text-gray-400"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Orçamento -->
+  <div id="modal-orcamento" class="hidden fixed inset-0 z-50 flex items-center justify-center p-6" style="max-width:430px;margin:0 auto;left:50%;transform:translateX(-50%);">
+    <div class="absolute inset-0 bg-black/60" onclick="acompanhar_servico_fecharModalOrcamento()"></div>
+    <div class="relative bg-white rounded-2xl p-5 w-full max-w-sm shadow-2xl">
+      <button onclick="acompanhar_servico_fecharModalOrcamento()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition">
+        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <h3 class="text-lg font-display font-bold text-gray-800 mb-1">Orçamento #2847</h3>
+      <p class="text-xs text-gray-400 mb-4">Válido até 12/02/2025</p>
+      <div class="space-y-2 mb-4">
+        <div class="flex justify-between text-sm"><span class="text-gray-600">Bomba d'água (VW original)</span><span class="font-semibold text-gray-800">R$ 680,00</span></div>
+        <div class="flex justify-between text-sm"><span class="text-gray-600">Mangueira superior c/ abraçadeira</span><span class="font-semibold text-gray-800">R$ 220,00</span></div>
+        <div class="flex justify-between text-sm"><span class="text-gray-600">Radiador alumínio</span><span class="font-semibold text-gray-800">R$ 580,00</span></div>
+        <div class="flex justify-between text-sm"><span class="text-gray-600">Líquido de arrefecimento</span><span class="font-semibold text-gray-800">R$ 45,00</span></div>
+        <div class="flex justify-between text-sm"><span class="text-gray-600">Mão de obra</span><span class="font-semibold text-gray-800">R$ 325,00</span></div>
+      </div>
+      <div class="h-px bg-gray-100 mb-3"></div>
+      <div class="flex justify-between mb-5">
+        <span class="font-display font-bold text-gray-800">Total</span>
+        <span class="font-display font-bold text-marca-700 text-lg">R$ 1.850,00</span>
+      </div>
+      <button onclick="acompanhar_servico_aprovarOrcamento()" class="w-full bg-marca-700 text-white font-display font-semibold text-sm py-3.5 rounded-xl hover:bg-marca-800 transition active:scale-95 shadow-md shadow-marca-700/20">
+        Aprovar orçamento
+      </button>
+      <p class="text-xs text-gray-400 text-center mt-2">Ao aprovar, a oficina iniciará o serviço</p>
+    </div>
+  </div>
+
+  <script>
+    function acompanhar_servico_abrirFoto(legenda, data) {
+      document.getElementById('modal-foto-legenda').textContent = legenda;
+      document.getElementById('modal-foto-data').textContent = '📸 ' + data;
+      document.getElementById('modal-foto').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function acompanhar_servico_fecharModalFoto() {
+      document.getElementById('modal-foto').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    function acompanhar_servico_abrirOrcamento() {
+      document.getElementById('modal-orcamento').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function acompanhar_servico_fecharModalOrcamento() {
+      document.getElementById('modal-orcamento').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    function acompanhar_servico_aprovarOrcamento() {
+      acompanhar_servico_fecharModalOrcamento();
+      var banner = document.getElementById('orcamento-banner');
+      if (banner) {
+        banner.innerHTML = '<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center"><svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div><div><p class="text-sm font-display font-semibold text-green-800">Orçamento aprovado!</p><p class="text-xs text-green-600">A oficina foi notificada e iniciará o serviço em breve.</p></div></div>';
+      }
+      toast('Orçamento aprovado com sucesso!', 'ok');
+    }
+    function acompanhar_servico_contatoWhatsApp() {
+      toast('Abrindo WhatsApp da oficina...', 'info');
+    }
+  </script>
+</section>
+
+    <!-- TELAS -->nbsp;80,00</span>
                 </div>
                 <div class="card flex items-center justify-between py-3">
                     <div class="flex items-center gap-3">
