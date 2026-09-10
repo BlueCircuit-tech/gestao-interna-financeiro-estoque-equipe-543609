@@ -964,6 +964,139 @@
     window.ordens_de_servico_atualizarIndicadores = ordens_de_servico_atualizarIndicadores;
     </script>
 
+    <section data-tela="nova-ordem-de-servico" class="hidden">
+      <div class="px-4 pb-6">
+        <div class="flex items-center justify-between mb-5">
+          <div>
+            <h1 class="font-display text-xl font-bold text-marca-900">Nova Ordem de Serviço</h1>
+            <p class="text-sm text-stone-400 mt-0.5">Preencha os dados abaixo para abrir uma OS</p>
+          </div>
+          <button onclick="mostrarTela('dashboard')" class="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 transition-colors active:scale-95">
+            <svg class="w-5 h-5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between mb-6 px-1">
+          <div class="flex items-center gap-2" id="step-indicators">
+            <div class="flex flex-col items-center gap-1">
+              <div id="si-1" class="w-8 h-8 rounded-full bg-marca text-white flex items-center justify-center text-xs font-bold transition-all">1</div>
+              <span class="text-[10px] text-marca font-medium">Cliente</span>
+            </div>
+            <div class="flex-1 h-0.5 bg-stone-200 mx-1 rounded"><div id="line-1" class="h-full bg-marca rounded transition-all" style="width:0%"></div></div>
+            <div class="flex flex-col items-center gap-1">
+              <div id="si-2" class="w-8 h-8 rounded-full bg-stone-200 text-stone-400 flex items-center justify-center text-xs font-bold transition-all">2</div>
+              <span class="text-[10px] text-stone-400 font-medium">Veículo</span>
+            </div>
+            <div class="flex-1 h-0.5 bg-stone-200 mx-1 rounded"><div id="line-2" class="h-full bg-marca rounded transition-all" style="width:0%"></div></div>
+            <div class="flex flex-col items-center gap-1">
+              <div id="si-3" class="w-8 h-8 rounded-full bg-stone-200 text-stone-400 flex items-center justify-center text-xs font-bold transition-all">3</div>
+              <span class="text-[10px] text-stone-400 font-medium">Serviço</span>
+            </div>
+            <div class="flex-1 h-0.5 bg-stone-200 mx-1 rounded"><div id="line-3" class="h-full bg-marca rounded transition-all" style="width:0%"></div></div>
+            <div class="flex flex-col items-center gap-1">
+              <div id="si-4" class="w-8 h-8 rounded-full bg-stone-200 text-stone-400 flex items-center justify-center text-xs font-bold transition-all">4</div>
+              <span class="text-[10px] text-stone-400 font-medium">Mecânico</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="step-1" class="step-panel">
+          <div class="card p-4 mb-4">
+            <label class="block text-sm font-semibold text-stone-700 mb-2">Buscar Cliente</label>
+            <div class="relative">
+              <svg class="w-5 h-5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input type="text" id="busca-cliente" placeholder="Nome, CPF ou telefone..." class="w-full pl-10 pr-4 py-3 rounded-xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca transition-all" oninput="nova_ordem_de_servico_buscarClientes(this.value)">
+            </div>
+          </div>
+          <div id="lista-clientes" class="space-y-2"></div>
+        </div>
+
+        <div id="step-2" class="step-panel hidden">
+          <div class="card p-4 mb-3">
+            <label class="block text-sm font-semibold text-stone-700 mb-2">Selecionar Veículo</label>
+            <div id="lista-veiculos-cliente" class="space-y-2 mb-4"></div>
+            <button onclick="nova_ordem_de_servico_mostrarFormVeiculo()" class="w-full py-2.5 border-2 border-dashed border-stone-300 rounded-xl text-sm text-stone-500 hover:border-marca hover:text-marca transition-colors flex items-center justify-center gap-2 active:scale-[0.98]">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              Cadastrar Novo Veículo
+            </button>
+          </div>
+          <div id="form-novo-veiculo" class="card p-4 hidden">
+            <h3 class="text-sm font-semibold text-marca mb-3 flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              Dados do Veículo
+            </h3>
+            <div class="space-y-3">
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="block text-xs font-medium text-stone-500 mb-1">Marca</label><input type="text" id="v-marca" placeholder="Ex: Fiat" class="w-full px-3 py-2.5 rounded-lg border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca"></div>
+                <div><label class="block text-xs font-medium text-stone-500 mb-1">Modelo</label><input type="text" id="v-modelo" placeholder="Ex: Palio" class="w-full px-3 py-2.5 rounded-lg border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca"></div>
+              </div>
+              <div class="grid grid-cols-3 gap-3">
+                <div><label class="block text-xs font-medium text-stone-500 mb-1">Ano</label><input type="number" id="v-ano" placeholder="2022" class="w-full px-3 py-2.5 rounded-lg border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca"></div>
+                <div><label class="block text-xs font-medium text-stone-500 mb-1">Placa</label><input type="text" id="v-placa" placeholder="ABC-1234" class="w-full px-3 py-2.5 rounded-lg border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca uppercase" oninput="this.value=this.value.toUpperCase()"></div>
+                <div><label class="block text-xs font-medium text-stone-500 mb-1">Cor</label><input type="text" id="v-cor" placeholder="Prata" class="w-full px-3 py-2.5 rounded-lg border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca"></div>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="block text-xs font-medium text-stone-500 mb-1">Quilometragem</label><input type="number" id="v-km" placeholder="85000" class="w-full px-3 py-2.5 rounded-lg border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca"></div>
+                <div><label class="block text-xs font-medium text-stone-500 mb-1">Combustível</label>
+                  <select id="v-combustivel" class="w-full px-3 py-2.5 rounded-lg border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca">
+                    <option value="">Selecione</option><option>Gasolina</option><option>Etanol</option><option>Flex</option><option>Diesel</option><option>Elétrico</option><option>Híbrido</option>
+                  </select>
+                </div>
+              </div>
+              <div><label class="block text-xs font-medium text-stone-500 mb-1">Observações</label><textarea id="v-obs" placeholder="Detalhes adicionais..." rows="2" class="w-full px-3 py-2.5 rounded-lg border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca resize-none"></textarea></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="step-3" class="step-panel hidden">
+          <div class="card p-4 mb-3">
+            <label class="block text-sm font-semibold text-stone-700 mb-2">Problema Relatado pelo Cliente</label>
+            <textarea id="os-problema" rows="4" placeholder="Descreva o problema relatado pelo cliente..." class="w-full px-3 py-3 rounded-xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca resize-none"></textarea>
+          </div>
+          <div class="card p-4 mb-3">
+            <label class="block text-sm font-semibold text-stone-700 mb-2">Diagnóstico Inicial (opcional)</label>
+            <textarea id="os-diagnostico" rows="2" placeholder="Observações do atendente ao receber..." class="w-full px-3 py-3 rounded-xl border border-stone-200 bg-stone-50 text-sm focus:outline-none focus:ring-2 focus:ring-marca/30 focus:border-marca resize-none"></textarea>
+          </div>
+          <div class="card p-4 mb-3">
+            <label class="block text-sm font-semibold text-stone-700 mb-2">Fotos do Veículo</label>
+            <div class="border-2 border-dashed border-stone-300 rounded-xl p-6 text-center hover:border-marca/50 transition-colors cursor-pointer" onclick="nova_ordem_de_servico_simularAnexo(this)">
+              <svg class="w-10 h-10 text-stone-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <p class="text-sm text-stone-500">Toque para adicionar fotos</p>
+              <p class="text-xs text-stone-400 mt-1">JPG, PNG até 10MB</p>
+            </div>
+            <div id="fotos-anexadas" class="flex gap-2 mt-3 flex-wrap"></div>
+          </div>
+        </div>
+
+        <div id="step-4" class="step-panel hidden">
+          <div class="card p-4 mb-3">
+            <label class="block text-sm font-semibold text-stone-700 mb-3">Mecânico Responsável</label>
+            <div id="lista-mecanicos" class="space-y-2"></div>
+          </div>
+          <div id="resumo-os" class="card p-4 border-2 border-marca/20 bg-marca-50/30 mb-4">
+            <h3 class="font-display font-bold text-marca-900 text-sm mb-3 flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+              Resumo da Ordem de Serviço
+            </h3>
+            <div id="resumo-conteudo" class="space-y-2 text-sm"></div>
+          </div>
+        </div>
+
+        <div class="flex gap-3 pt-2">
+          <button id="btn-voltar" onclick="nova_ordem_de_servico_voltar()" class="hidden flex-1 py-3.5 rounded-xl border border-stone-300 text-stone-600 font-semibold text-sm hover:bg-stone-50 transition-colors active:scale-95">
+            Voltar
+          </button>
+          <button id="btn-avancar" onclick="nova_ordem_de_servico_avancar()" class="flex-1 py-3.5 rounded-xl bg-marca text-white font-semibold text-sm hover:brightness-110 transition-all active:scale-95 shadow-lg shadow-marca/30">
+            Avançar
+          </button>
+          <button id="btn-criar-os" onclick="nova_ordem_de_servico_criar()" class="hidden flex-1 py-3.5 rounded-xl bg-marca text-white font-semibold text-sm hover:brightness-110 transition-all active:scale-95 shadow-lg shadow-marca/30 flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Criar Ordem de Serviço
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- TELAS -->
         </div>
       </main>
