@@ -2856,6 +2856,501 @@ const painel_do_mecanico_status_badges = {
   </div>
 </section>
 
+    <section data-tela="relatorios" class="hidden">
+  <div class="px-4 pb-6 space-y-4">
+    <!-- Header da tela -->
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="font-display text-xl font-bold text-marca-900">Relatórios</h2>
+        <p class="text-sm text-stone-500 mt-0.5">Análise gerencial e indicadores</p>
+      </div>
+      <button onclick="abrirModal('','Filtro de Período')" class="card px-3 py-2 flex items-center gap-1.5 text-sm font-medium text-marca-700 hover:bg-marca-50 transition-colors active:scale-95">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <span id="relatorios-periodo-label">Este mês</span>
+      </button>
+    </div>
+
+    <!-- Seletor de período -->
+    <div class="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4" style="scrollbar-width:none">
+      <button onclick="relatorios_setPeriodo('semana')" id="btn-periodo-semana" class="relatorios-periodo-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold transition-all">Esta semana</button>
+      <button onclick="relatorios_setPeriodo('mes')" id="btn-periodo-mes" class="relatorios-periodo-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold transition-all bg-marca-800 text-white">Este mês</button>
+      <button onclick="relatorios_setPeriodo('trimestre')" id="btn-periodo-trimestre" class="relatorios-periodo-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold transition-all">Últimos 3 meses</button>
+      <button onclick="relatorios_setPeriodo('custom')" id="btn-periodo-custom" class="relatorios-periodo-btn whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-semibold transition-all">Customizado</button>
+    </div>
+
+    <!-- Cards de indicadores -->
+    <div class="grid grid-cols-2 gap-3">
+      <div class="card p-3.5">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-marca-100 flex items-center justify-center">
+            <svg class="w-4 h-4 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <span class="text-xs text-stone-500 font-medium">Faturamento</span>
+        </div>
+        <p class="font-display text-xl font-bold text-marca-900" id="rel-faturamento">R$ 28.450</p>
+        <p class="text-xs text-emerald-600 font-semibold mt-0.5">↑ 12.3% vs mês anterior</p>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
+            <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          </div>
+          <span class="text-xs text-stone-500 font-medium">OS Finalizadas</span>
+        </div>
+        <p class="font-display text-xl font-bold text-marca-900" id="rel-os">142</p>
+        <p class="text-xs text-emerald-600 font-semibold mt-0.5">↑ 8.7% vs mês anterior</p>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <span class="text-xs text-stone-500 font-medium">Mão de Obra</span>
+        </div>
+        <p class="font-display text-xl font-bold text-marca-900" id="rel-mao-obra">R$ 12.830</p>
+        <p class="text-xs text-stone-400 font-medium mt-0.5">45% do faturamento</p>
+      </div>
+      <div class="card p-3.5">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          </div>
+          <span class="text-xs text-stone-500 font-medium">Peças Vendidas</span>
+        </div>
+        <p class="font-display text-xl font-bold text-marca-900" id="rel-pecas">R$ 15.620</p>
+        <p class="text-xs text-rose-500 font-semibold mt-0.5">↓ 3.1% vs mês anterior</p>
+      </div>
+    </div>
+
+    <!-- Gráfico de Faturamento -->
+    <div class="card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-display font-bold text-marca-900 text-sm">Faturamento Mensal</h3>
+        <button onclick="relatorios_exportar('faturamento')" class="text-xs text-marca-600 font-semibold hover:text-marca-800 transition-colors flex items-center gap-1 active:scale-95">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Exportar PDF
+        </button>
+      </div>
+      <svg viewBox="0 0 340 160" class="w-full h-36">
+        <!-- Grid lines -->
+        <line x1="30" y1="20" x2="335" y2="20" stroke="#e7e5e4" stroke-width="0.5"/>
+        <line x1="30" y1="55" x2="335" y2="55" stroke="#e7e5e4" stroke-width="0.5"/>
+        <line x1="30" y1="90" x2="335" y2="90" stroke="#e7e5e4" stroke-width="0.5"/>
+        <line x1="30" y1="125" x2="335" y2="125" stroke="#e7e5e4" stroke-width="0.5"/>
+        <!-- Y-axis labels -->
+        <text x="26" y="24" text-anchor="end" font-size="8" fill="#a8a29e">30k</text>
+        <text x="26" y="59" text-anchor="end" font-size="8" fill="#a8a29e">22k</text>
+        <text x="26" y="94" text-anchor="end" font-size="8" fill="#a8a29e">14k</text>
+        <text x="26" y="129" text-anchor="end" font-size="8" fill="#a8a29e">6k</text>
+        <!-- Area fill -->
+        <path d="M47,115 L100,95 L153,70 L206,85 L259,50 L312,35 L312,130 L47,130 Z" fill="url(#gradArea)" opacity="0.3"/>
+        <!-- Line -->
+        <polyline points="47,115 100,95 153,70 206,85 259,50 312,35" fill="none" stroke="#7C2D12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Dots -->
+        <circle cx="47" cy="115" r="4" fill="#7C2D12" stroke="#fff" stroke-width="2"/>
+        <circle cx="100" cy="95" r="4" fill="#7C2D12" stroke="#fff" stroke-width="2"/>
+        <circle cx="153" cy="70" r="4" fill="#7C2D12" stroke="#fff" stroke-width="2"/>
+        <circle cx="206" cy="85" r="4" fill="#F97316" stroke="#fff" stroke-width="2"/>
+        <circle cx="259" cy="50" r="4" fill="#7C2D12" stroke="#fff" stroke-width="2"/>
+        <circle cx="312" cy="35" r="5" fill="#F97316" stroke="#fff" stroke-width="2.5"/>
+        <!-- X-axis labels -->
+        <text x="47" y="145" text-anchor="middle" font-size="8" fill="#78716c" font-weight="600">Jan</text>
+        <text x="100" y="145" text-anchor="middle" font-size="8" fill="#78716c" font-weight="600">Fev</text>
+        <text x="153" y="145" text-anchor="middle" font-size="8" fill="#78716c" font-weight="600">Mar</text>
+        <text x="206" y="145" text-anchor="middle" font-size="8" fill="#78716c" font-weight="600">Abr</text>
+        <text x="259" y="145" text-anchor="middle" font-size="8" fill="#78716c" font-weight="600">Mai</text>
+        <text x="312" y="145" text-anchor="middle" font-size="8" fill="#78716c" font-weight="600" font-weight="700">Jun</text>
+        <!-- Tooltip values -->
+        <text x="47" y="108" text-anchor="middle" font-size="7" fill="#57534e" font-weight="600">18.2k</text>
+        <text x="100" y="88" text-anchor="middle" font-size="7" fill="#57534e" font-weight="600">22.5k</text>
+        <text x="153" y="63" text-anchor="middle" font-size="7" fill="#57534e" font-weight="600">26.1k</text>
+        <text x="206" y="78" text-anchor="middle" font-size="7" fill="#57534e" font-weight="600">23.8k</text>
+        <text x="259" y="43" text-anchor="middle" font-size="7" fill="#57534e" font-weight="600">29.4k</text>
+        <text x="312" y="28" text-anchor="middle" font-size="7" fill="#1c1917" font-weight="700">32.1k</text>
+        <defs>
+          <linearGradient id="gradArea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7C2D12"/>
+            <stop offset="100%" stop-color="#7C2D12" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <!-- Ranking dias mais lucrativos -->
+      <div class="mt-4 pt-3 border-t border-stone-100">
+        <p class="text-xs font-semibold text-stone-600 mb-2">Dias mais lucrativos do período</p>
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-stone-700">12/06/2025</span>
+            <div class="flex-1 mx-3 h-2 bg-stone-100 rounded-full overflow-hidden"><div class="h-full bg-marca-600 rounded-full" style="width:95%"></div></div>
+            <span class="text-sm font-bold text-marca-800">R$ 4.230</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-stone-700">05/06/2025</span>
+            <div class="flex-1 mx-3 h-2 bg-stone-100 rounded-full overflow-hidden"><div class="h-full bg-marca-500 rounded-full" style="width:78%"></div></div>
+            <span class="text-sm font-bold text-marca-700">R$ 3.480</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-stone-700">28/05/2025</span>
+            <div class="flex-1 mx-3 h-2 bg-stone-100 rounded-full overflow-hidden"><div class="h-full bg-marca-400 rounded-full" style="width:65%"></div></div>
+            <span class="text-sm font-bold text-marca-600">R$ 2.890</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desempenho dos Mecânicos -->
+    <div class="card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-display font-bold text-marca-900 text-sm">Desempenho dos Mecânicos</h3>
+        <button onclick="relatorios_exportar('mecanicos')" class="text-xs text-marca-600 font-semibold hover:text-marca-800 transition-colors flex items-center gap-1 active:scale-95">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Exportar PDF
+        </button>
+      </div>
+      <div class="overflow-x-auto -mx-4 px-4" style="scrollbar-width:none">
+        <table class="w-full min-w-[520px] text-sm">
+          <thead>
+            <tr class="border-b border-stone-200">
+              <th class="text-left py-2 px-1 text-xs font-semibold text-stone-500 uppercase tracking-wide">Mecânico</th>
+              <th class="text-center py-2 px-1 text-xs font-semibold text-stone-500 uppercase tracking-wide">Serviços</th>
+              <th class="text-center py-2 px-1 text-xs font-semibold text-stone-500 uppercase tracking-wide">Tempo Médio</th>
+              <th class="text-right py-2 px-1 text-xs font-semibold text-stone-500 uppercase tracking-wide">Comissão</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="relatorios_detalheMecanico('Carlos Mendes')" class="border-b border-stone-100 cursor-pointer hover:bg-marca-50/50 transition-colors">
+              <td class="py-2.5 px-1">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-full bg-marca-200 flex items-center justify-center text-xs font-bold text-marca-800">CM</div>
+                  <span class="font-medium text-stone-800">Carlos Mendes</span>
+                </div>
+              </td>
+              <td class="text-center py-2.5 px-1 text-stone-700 font-medium">38</td>
+              <td class="text-center py-2.5 px-1 text-stone-700">2h 15min</td>
+              <td class="text-right py-2.5 px-1 font-bold text-emerald-700">R$ 2.280</td>
+            </tr>
+            <tr onclick="relatorios_detalheMecanico('Roberto Silva')" class="border-b border-stone-100 cursor-pointer hover:bg-marca-50/50 transition-colors">
+              <td class="py-2.5 px-1">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-full bg-orange-200 flex items-center justify-center text-xs font-bold text-orange-800">RS</div>
+                  <span class="font-medium text-stone-800">Roberto Silva</span>
+                </div>
+              </td>
+              <td class="text-center py-2.5 px-1 text-stone-700 font-medium">31</td>
+              <td class="text-center py-2.5 px-1 text-stone-700">2h 45min</td>
+              <td class="text-right py-2.5 px-1 font-bold text-emerald-700">R$ 1.860</td>
+            </tr>
+            <tr onclick="relatorios_detalheMecanico('André Oliveira')" class="border-b border-stone-100 cursor-pointer hover:bg-marca-50/50 transition-colors">
+              <td class="py-2.5 px-1">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-full bg-amber-200 flex items-center justify-center text-xs font-bold text-amber-800">AO</div>
+                  <span class="font-medium text-stone-800">André Oliveira</span>
+                </div>
+              </td>
+              <td class="text-center py-2.5 px-1 text-stone-700 font-medium">27</td>
+              <td class="text-center py-2.5 px-1 text-stone-700">3h 10min</td>
+              <td class="text-right py-2.5 px-1 font-bold text-emerald-700">R$ 1.485</td>
+            </tr>
+            <tr onclick="relatorios_detalheMecanico('Fernando Costa')" class="border-b border-stone-100 cursor-pointer hover:bg-marca-50/50 transition-colors">
+              <td class="py-2.5 px-1">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center text-xs font-bold text-stone-700">FC</div>
+                  <span class="font-medium text-stone-800">Fernando Costa</span>
+                </div>
+              </td>
+              <td class="text-center py-2.5 px-1 text-stone-700 font-medium">22</td>
+              <td class="text-center py-2.5 px-1 text-stone-700">1h 50min</td>
+              <td class="text-right py-2.5 px-1 font-bold text-emerald-700">R$ 1.100</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Serviços Mais Frequentes -->
+    <div class="card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-display font-bold text-marca-900 text-sm">Serviços Mais Frequentes</h3>
+        <button onclick="relatorios_exportar('servicos')" class="text-xs text-marca-600 font-semibold hover:text-marca-800 transition-colors flex items-center gap-1 active:scale-95">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Exportar PDF
+        </button>
+      </div>
+      <div class="flex items-center gap-4">
+        <!-- Donut chart -->
+        <svg viewBox="0 0 140 140" class="w-36 h-36 flex-shrink-0">
+          <!-- Background circle -->
+          <circle cx="70" cy="70" r="55" fill="none" stroke="#f5f5f4" stroke-width="18"/>
+          <!-- 35% Troca de óleo - marca-800 -->
+          <circle cx="70" cy="70" r="55" fill="none" stroke="#7C2D12" stroke-width="18"
+            stroke-dasharray="121 239" stroke-dashoffset="0" transform="rotate(-90 70 70)" stroke-linecap="butt"/>
+          <!-- 18% Alinhamento - marca-600 -->
+          <circle cx="70" cy="70" r="55" fill="none" stroke="#c2410c" stroke-width="18"
+            stroke-dasharray="62.4 297.6" stroke-dashoffset="-121" transform="rotate(-90 70 70)" stroke-linecap="butt"/>
+          <!-- 15% Revisão geral - marca-400 -->
+          <circle cx="70" cy="70" r="55" fill="none" stroke="#fb923c" stroke-width="18"
+            stroke-dasharray="52 308" stroke-dashoffset="-183.4" transform="rotate(-90 70 70)" stroke-linecap="butt"/>
+          <!-- 12% Freios - laranja -->
+          <circle cx="70" cy="70" r="55" fill="none" stroke="#F97316" stroke-width="18"
+            stroke-dasharray="41.6 318.4" stroke-dashoffset="-235.4" transform="rotate(-90 70 70)" stroke-linecap="butt"/>
+          <!-- 10% Suspensão - amber -->
+          <circle cx="70" cy="70" r="55" fill="none" stroke="#d97706" stroke-width="18"
+            stroke-dasharray="34.6 325.4" stroke-dashoffset="-277" transform="rotate(-90 70 70)" stroke-linecap="butt"/>
+          <!-- 10% restante - stone-200 -->
+          <circle cx="70" cy="70" r="55" fill="none" stroke="#e7e5e4" stroke-width="18"
+            stroke-dasharray="34.6 325.4" stroke-dashoffset="-311.6" transform="rotate(-90 70 70)" stroke-linecap="butt"/>
+          <!-- Center text -->
+          <text x="70" y="66" text-anchor="middle" font-size="11" font-weight="800" fill="#1c1917">142</text>
+          <text x="70" y="80" text-anchor="middle" font-size="7" fill="#78716c">serviços</text>
+        </svg>
+        <!-- Legend -->
+        <div class="flex-1 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-marca-800"></span><span class="text-xs text-stone-600">Troca de óleo</span></div>
+            <span class="text-xs font-bold text-stone-800">35%</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-marca-600"></span><span class="text-xs text-stone-600">Alinhamento</span></div>
+            <span class="text-xs font-bold text-stone-800">18%</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-marca-400"></span><span class="text-xs text-stone-600">Revisão geral</span></div>
+            <span class="text-xs font-bold text-stone-800">15%</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-orange-400"></span><span class="text-xs text-stone-600">Freios</span></div>
+            <span class="text-xs font-bold text-stone-800">12%</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span><span class="text-xs text-stone-600">Suspensão</span></div>
+            <span class="text-xs font-bold text-stone-800">10%</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-stone-200"></span><span class="text-xs text-stone-600">Outros</span></div>
+            <span class="text-xs font-bold text-stone-800">10%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Peças Mais Utilizadas -->
+    <div class="card p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-display font-bold text-marca-900 text-sm">Peças Mais Utilizadas</h3>
+        <button onclick="relatorios_exportar('pecas')" class="text-xs text-marca-600 font-semibold hover:text-marca-800 transition-colors flex items-center gap-1 active:scale-95">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Exportar PDF
+        </button>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3 p-2.5 bg-stone-50/60 rounded-xl">
+          <div class="w-10 h-10 rounded-lg bg-marca-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-stone-800">Filtro de óleo 5W30</p>
+            <p class="text-xs text-stone-500">Fornecedor: Bosch</p>
+            <div class="flex items-center gap-3 mt-1.5">
+              <span class="text-xs text-stone-500">Qtd: <strong class="text-stone-700">24 un</strong></span>
+              <span class="text-xs text-stone-500">Total: <strong class="text-marca-700">R$ 2.880</strong></span>
+            </div>
+          </div>
+          <span class="badge bg-marca-100 text-marca-700 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">+8 este mês</span>
+        </div>
+        <div class="flex items-start gap-3 p-2.5 bg-stone-50/60 rounded-xl">
+          <div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-stone-800">Pastilha de freio dianteira</p>
+            <p class="text-xs text-stone-500">Fornecedor: TRW</p>
+            <div class="flex items-center gap-3 mt-1.5">
+              <span class="text-xs text-stone-500">Qtd: <strong class="text-stone-700">18 un</strong></span>
+              <span class="text-xs text-stone-500">Total: <strong class="text-marca-700">R$ 3.240</strong></span>
+            </div>
+          </div>
+          <span class="badge bg-orange-100 text-orange-700 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">+4 este mês</span>
+        </div>
+        <div class="flex items-start gap-3 p-2.5 bg-stone-50/60 rounded-xl">
+          <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-stone-800">Amortecedor dianteiro</p>
+            <p class="text-xs text-stone-500">Fornecedor: Monroe</p>
+            <div class="flex items-center gap-3 mt-1.5">
+              <span class="text-xs text-stone-500">Qtd: <strong class="text-stone-700">8 un</strong></span>
+              <span class="text-xs text-stone-500">Total: <strong class="text-marca-700">R$ 4.800</strong></span>
+            </div>
+          </div>
+          <span class="badge bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">+2 este mês</span>
+        </div>
+        <div class="flex items-start gap-3 p-2.5 bg-stone-50/60 rounded-xl">
+          <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-stone-800">Vela de ignição NGK</p>
+            <p class="text-xs text-stone-500">Fornecedor: NGK</p>
+            <div class="flex items-center gap-3 mt-1.5">
+              <span class="text-xs text-stone-500">Qtd: <strong class="text-stone-700">16 un</strong></span>
+              <span class="text-xs text-stone-500">Total: <strong class="text-marca-700">R$ 1.280</strong></span>
+            </div>
+          </div>
+          <span class="badge bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">+5 este mês</span>
+        </div>
+        <div class="flex items-start gap-3 p-2.5 bg-stone-50/60 rounded-xl">
+          <div class="w-10 h-10 rounded-lg bg-violet-50 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-stone-800">Correia dentada</p>
+            <p class="text-xs text-stone-500">Fornecedor: Gates</p>
+            <div class="flex items-center gap-3 mt-1.5">
+              <span class="text-xs text-stone-500">Qtd: <strong class="text-stone-700">6 un</strong></span>
+              <span class="text-xs text-stone-500">Total: <strong class="text-marca-700">R$ 3.420</strong></span>
+            </div>
+          </div>
+          <span class="badge bg-violet-50 text-violet-700 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">+1 este mês</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumo Financeiro Detalhado -->
+    <div class="card p-4">
+      <h3 class="font-display font-bold text-marca-900 text-sm mb-3">Resumo Financeiro</h3>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between py-2 border-b border-stone-100">
+          <span class="text-sm text-stone-600">Serviços realizados</span>
+          <span class="text-sm font-bold text-stone-800">142 OS</span>
+        </div>
+        <div class="flex items-center justify-between py-2 border-b border-stone-100">
+          <span class="text-sm text-stone-600">Valor médio por OS</span>
+          <span class="text-sm font-bold text-stone-800">R$ 200,35</span>
+        </div>
+        <div class="flex items-center justify-between py-2 border-b border-stone-100">
+          <span class="text-sm text-stone-600">Ticket médio mão de obra</span>
+          <span class="text-sm font-bold text-stone-800">R$ 90,35</span>
+        </div>
+        <div class="flex items-center justify-between py-2 border-b border-stone-100">
+          <span class="text-sm text-stone-600">Ticket médio peças</span>
+          <span class="text-sm font-bold text-stone-800">R$ 110,00</span>
+        </div>
+        <div class="flex items-center justify-between py-2 border-b border-stone-100">
+          <span class="text-sm text-stone-600">Total em comissões</span>
+          <span class="text-sm font-bold text-marca-700">R$ 6.725</span>
+        </div>
+        <div class="flex items-center justify-between py-2">
+          <span class="text-sm text-stone-600">Clientes atendidos</span>
+          <span class="text-sm font-bold text-stone-800">98</span>
+        </div>
+      </div>
+      <button onclick="relatorios_exportar('financeiro')" class="w-full mt-3 py-2.5 bg-marca-800 text-white rounded-xl text-sm font-semibold flex items-center justify-center gap-2 active:scale-95 transition-transform hover:bg-marca-900">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Exportar Relatório Completo (PDF)
+      </button>
+    </div>
+
+    <!-- Espaço antes do menu -->
+    <div class="h-6"></div>
+  </div>
+
+  <!-- Modal de período customizado -->
+  <div id="relatorios-modal-periodo" class="hidden fixed inset-0 z-50 flex items-end justify-center bg-black/40">
+    <div class="bg-white rounded-t-2xl w-full max-w-[430px] p-5 animate-slideUp">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-display font-bold text-lg text-marca-900">Selecionar Período</h3>
+        <button onclick="fecharModal()" class="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center hover:bg-stone-200 transition-colors">
+          <svg class="w-4 h-4 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-stone-600 mb-1">Data inicial</label>
+          <input type="date" id="relatorios-data-inicio" class="w-full px-3 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent" value="2025-05-01"/>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-stone-600 mb-1">Data final</label>
+          <input type="date" id="relatorios-data-fim" class="w-full px-3 py-2.5 rounded-xl border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent" value="2025-06-12"/>
+        </div>
+        <button onclick="relatorios_aplicarPeriodoCustom()" class="w-full py-3 bg-marca-800 text-white rounded-xl font-semibold text-sm active:scale-95 transition-transform hover:bg-marca-900">
+          Aplicar Filtro
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function relatorios_setPeriodo(periodo) {
+      var labels = { 'semana': 'Esta semana', 'mes': 'Este mês', 'trimestre': 'Últimos 3 meses', 'custom': 'Customizado' };
+      document.getElementById('relatorios-periodo-label').textContent = labels[periodo];
+      // Update active state
+      document.querySelectorAll('.relatorios-periodo-btn').forEach(function(btn) {
+        btn.classList.remove('bg-marca-800', 'text-white');
+        btn.classList.add('bg-stone-100', 'text-stone-600');
+      });
+      var activeBtn = document.getElementById('btn-periodo-' + periodo);
+      activeBtn.classList.remove('bg-stone-100', 'text-stone-600');
+      activeBtn.classList.add('bg-marca-800', 'text-white');
+
+      if (periodo === 'custom') {
+        document.getElementById('relatorios-modal-periodo').classList.remove('hidden');
+      }
+      toast('Período atualizado para ' + labels[periodo], 'info');
+    }
+
+    function relatorios_aplicarPeriodoCustom() {
+      var inicio = document.getElementById('relatorios-data-inicio').value;
+      var fim = document.getElementById('relatorios-data-fim').value;
+      if (inicio && fim) {
+        document.getElementById('relatorios-periodo-label').textContent = inicio + ' a ' + fim;
+        document.querySelectorAll('.relatorios-periodo-btn').forEach(function(btn) {
+          btn.classList.remove('bg-marca-800', 'text-white');
+          btn.classList.add('bg-stone-100', 'text-stone-600');
+        });
+        var customBtn = document.getElementById('btn-periodo-custom');
+        customBtn.classList.remove('bg-stone-100', 'text-stone-600');
+        customBtn.classList.add('bg-marca-800', 'text-white');
+        fecharModal();
+        toast('Período customizado aplicado com sucesso', 'ok');
+      }
+    }
+
+    function relatorios_exportar(tipo) {
+      var nomes = { 'faturamento': 'Faturamento', 'mecanicos': 'Desempenho de Mecânicos', 'servicos': 'Serviços Frequentes', 'pecas': 'Peças Utilizadas', 'financeiro': 'Financeiro Completo' };
+      toast('Exportando relatório de ' + nomes[tipo] + '...', 'info');
+      setTimeout(function() {
+        toast('Relatório de ' + nomes[tipo] + ' gerado com sucesso!', 'ok');
+      }, 1500);
+    }
+
+    function relatorios_detalheMecanico(nome) {
+      var dadosMecanicos = {
+        'Carlos Mendes': { servicos: 38, comissao: 'R$ 2.280', tempoMedio: '2h 15min', avaliacao: 4.8, especialidade: 'Motor e transmissão' },
+        'Roberto Silva': { servicos: 31, comissao: 'R$ 1.860', tempoMedio: '2h 45min', avaliacao: 4.5, especialidade: 'Suspensão e freios' },
+        'André Oliveira': { servicos: 27, comissao: 'R$ 1.485', tempoMedio: '3h 10min', avaliacao: 4.6, especialidade: 'Elétrica e injeção' },
+        'Fernando Costa': { servicos: 22, comissao: 'R$ 1.100', tempoMedio: '1h 50min', avaliacao: 4.3, especialidade: 'Diagnóstico geral' }
+      };
+      var d = dadosMecanicos[nome] || {};
+      var html = '<div class="space-y-3">' +
+        '<div class="flex items-center gap-3 mb-2">' +
+          '<div class="w-12 h-12 rounded-full bg-marca-200 flex items-center justify-center text-sm font-bold text-marca-800">' + nome.split(' ').map(function(n){return n[0]}).join('') + '</div>' +
+          '<div><p class="font-display font-bold text-marca-900">' + nome + '</p><p class="text-xs text-stone-500">' + (d.especialidade || '') + '</p></div>' +
+        '</div>' +
+        '<div class="grid grid-cols-3 gap-2">' +
+          '<div class="bg-marca-50 rounded-xl p-2.5 text-center"><p class="text-lg font-bold text-marca-800">' + (d.servicos || 0) + '</p><p class="text-[10px] text-stone-500">Serviços</p></div>' +
+          '<div class="bg-emerald-50 rounded-xl p-2.5 text-center"><p class="text-lg font-bold text-emerald-700">' + (d.comissao || 'R$ 0') + '</p><p class="text-[10px] text-stone-500">Comissão</p></div>' +
+          '<div class="bg-blue-50 rounded-xl p-2.5 text-center"><p class="text-lg font-bold text-blue-700">' + (d.tempoMedio || '-') + '</p><p class="text-[10px] text-stone-500">Tempo médio</p></div>' +
+        '</div>' +
+        '<div class="bg-amber-50 rounded-xl p-3 flex items-center gap-2">' +
+          '<svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' +
+          '<span class="text-sm font-semibold text-amber-700">Avaliação: ' + (d.avaliacao || '-') + '/5.0</span>' +
+        '</div>' +
+      '</div>';
+      abrirModal(html, nome);
+    }
+  </script>
+</section>
+
     <!-- TELAS -->nbsp;80,00</span>
                 </div>
                 <div class="card flex items-center justify-between py-3">
