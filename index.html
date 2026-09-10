@@ -551,6 +551,419 @@
     })();
     </script>
 
+    <section data-tela="ordens-de-servico" class="hidden">
+      <!-- Indicadores rápidos -->
+      <div class="grid grid-cols-4 gap-2 mb-4" id="indicadores-os">
+        <div class="bg-white rounded-xl p-2.5 text-center shadow-sm border border-stone-100">
+          <div class="text-lg font-bold text-stone-800 leading-none" id="ind-aguardando">2</div>
+          <div class="text-[10px] text-stone-500 mt-0.5 leading-tight">Aguardando</div>
+        </div>
+        <div class="bg-white rounded-xl p-2.5 text-center shadow-sm border border-stone-100">
+          <div class="text-lg font-bold text-stone-800 leading-none" id="ind-diagnostico">1</div>
+          <div class="text-[10px] text-stone-500 mt-0.5 leading-tight">Diagnóstico</div>
+        </div>
+        <div class="bg-white rounded-xl p-2.5 text-center shadow-sm border border-stone-100">
+          <div class="text-lg font-bold text-stone-800 leading-none" id="ind-pecas">1</div>
+          <div class="text-[10px] text-stone-500 mt-0.5 leading-tight">Aguard. Peças</div>
+        </div>
+        <div class="bg-white rounded-xl p-2.5 text-center shadow-sm border border-stone-100">
+          <div class="text-lg font-bold text-stone-800 leading-none" id="ind-andamento">2</div>
+          <div class="text-[10px] text-stone-500 mt-0.5 leading-tight">Em Andamento</div>
+        </div>
+      </div>
+
+      <!-- Barra de pesquisa -->
+      <div class="relative mb-3">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search-os" placeholder="Buscar OS, cliente, veículo..."
+               class="w-full pl-10 pr-9 py-2.5 bg-white border border-stone-200 rounded-xl text-sm text-stone-700 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition-all font-body">
+        <button id="clear-search" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600" onclick="ordens_de_servico_clearSearch()">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 18 18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Filtros -->
+      <div class="flex gap-2 mb-4 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+        <button onclick="ordens_de_servico_setFilter('todos')" data-filtro="todos"
+                class="ordens-filtro-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all bg-marca-700 text-white">
+          Todos
+        </button>
+        <button onclick="ordens_de_servico_setFilter('aguardando')" data-filtro="aguardando"
+                class="ordens-filtro-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all bg-stone-100 text-stone-600 hover:bg-stone-200">
+          Aguardando
+        </button>
+        <button onclick="ordens_de_servico_setFilter('diagnostico')" data-filtro="diagnostico"
+                class="ordens-filtro-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all bg-stone-100 text-stone-600 hover:bg-stone-200">
+          Diagnóstico
+        </button>
+        <button onclick="ordens_de_servico_setFilter('pecas')" data-filtro="pecas"
+                class="ordens-filtro-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all bg-stone-100 text-stone-600 hover:bg-stone-200">
+          Aguard. Peças
+        </button>
+        <button onclick="ordens_de_servico_setFilter('andamento')" data-filtro="andamento"
+                class="ordens-filtro-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all bg-stone-100 text-stone-600 hover:bg-stone-200">
+          Em Andamento
+        </button>
+        <button onclick="ordens_de_servico_setFilter('finalizado')" data-filtro="finalizado"
+                class="ordens-filtro-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all bg-stone-100 text-stone-600 hover:bg-stone-200">
+          Finalizados
+        </button>
+        <button onclick="ordens_de_servico_setFilter('entregue')" data-filtro="entregue"
+                class="ordens-filtro-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all bg-stone-100 text-stone-600 hover:bg-stone-200">
+          Entregues
+        </button>
+      </div>
+
+      <!-- Filtro por mecânico -->
+      <div class="relative mb-4">
+        <select id="filter-mecanico" onchange="ordens_de_servico_applyFilters()"
+                class="w-full appearance-none bg-white border border-stone-200 rounded-xl px-3 py-2.5 pr-8 text-sm text-stone-700 focus:outline-none focus:ring-2 focus:ring-marca-500 font-body">
+          <option value="todos">Todos os mecânicos</option>
+          <option value="carlos">Carlos Mendes</option>
+          <option value="paulo">Paulo Henrique</option>
+          <option value="maria">Maria Oliveira</option>
+          <option value="joao">João Santos</option>
+        </select>
+        <svg class="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="m6 9 6 6 6-6"/></svg>
+      </div>
+
+      <!-- Pull to refresh -->
+      <div id="ptr-os" class="flex items-center justify-center py-3 opacity-0 transition-opacity duration-200">
+        <svg class="w-5 h-5 text-marca-500 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+        <span class="text-xs text-marca-600 ml-2 font-medium">Atualizando...</span>
+      </div>
+
+      <!-- Contador de resultados -->
+      <div class="mb-3">
+        <span id="result-count" class="text-xs text-stone-400"></span>
+      </div>
+
+      <!-- Lista de OS -->
+      <div id="lista-os" class="space-y-3">
+      </div>
+
+      <!-- Estado vazio -->
+      <div id="empty-os" class="hidden text-center py-12">
+        <div class="w-16 h-16 mx-auto bg-stone-100 rounded-full flex items-center justify-center mb-3">
+          <svg class="w-8 h-8 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v8.25A2.25 2.25 0 0 0 6 16.5"/></svg>
+        </div>
+        <p class="text-sm text-stone-400 font-medium mb-1">Nenhuma OS encontrada</p>
+        <p class="text-xs text-stone-400">Tente ajustar os filtros ou a busca</p>
+      </div>
+
+      <!-- FAB Nova OS -->
+      <button onclick="mostrarTela('nova-ordem-de-servico')"
+              class="fixed bottom-20 right-4 w-14 h-14 bg-marca-600 hover:bg-marca-700 active:scale-90 text-white rounded-full shadow-lg flex items-center justify-center transition-all z-30 hover:shadow-xl">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" d="M12 4v16m8-8H4"/></svg>
+      </button>
+    </section>
+
+    <script>
+    const ordens_de_servico_dados = [
+      { numero: 'OS-0147', cliente: 'Roberto Almeida', veiculo: 'Civic', ano: '2022', cor: 'Preto', placa: 'ABC-1D23', km: 45200, servico: 'Troca de óleo + revisão geral', problema: 'Barulho na suspensão dianteira', status: 'aguardando', mecanico: 'carlos', valor: 680, data: '2026-01-15', hora: '08:30', pecas: [{nome:'Óleo 5W30', qtd:1, valor:180},{nome:'Filtro de óleo', qtd:1, valor:45},{nome:'Filtro de ar', qtd:1, valor:62}] },
+      { numero: 'OS-0148', cliente: 'Fernanda Costa', veiculo: 'Corolla', ano: '2021', cor: 'Prata', placa: 'DEF-4G56', km: 32100, servico: 'Troca de pastilhas de freio', problema: 'Freio fazendo barulho ao pressionar', status: 'diagnostico', mecanico: 'paulo', valor: 520, data: '2026-01-15', hora: '09:15', pecas: [{nome:'Pastilha diant.', qtd:1, valor:340},{nome:'Fluido de freio', qtd:1, valor:45}] },
+      { numero: 'OS-0149', cliente: 'Lucas Pereira', veiculo: 'HB20', ano: '2023', cor: 'Vermelho', placa: 'GHI-7J89', km: 12800, servico: 'Instalação som + LED', problema: 'Instalar sistema de som e iluminação LED', status: 'pecas', mecanico: 'maria', valor: 1450, data: '2026-01-15', hora: '10:00', pecas: [{nome:'Kit LED farol', qtd:1, valor:380},{nome:'Subwoofer 12pol', qtd:1, valor:650},{nome:'Amplificador', qtd:1, val:420}] },
+      { numero: 'OS-0150', cliente: 'Patricia Moura', veiculo: 'Onix', ano: '2022', cor: 'Branco', placa: 'JKL-2M34', km: 28900, servico: 'Revisão 30.000km', problema: 'Revisão preventiva completa', status: 'andamento', mecanico: 'joao', valor: 890, data: '2026-01-15', hora: '07:45', pecas: [{nome:'Filtro de ar', qtd:1, valor:62},{nome:'Filtro de combustível', qtd:1, valor:78},{nome:'Óleo 5W30', qtd:1, valor:180}] },
+      { numero: 'OS-0151', cliente: 'Marcos Vinicius', veiculo: 'Cruze', ano: '2020', cor: 'Cinza', placa: 'MNO-5P67', km: 67300, servico: 'Troca de correia dentada', problema: 'Preventiva — correia com 60mil km', status: 'andamento', mecanico: 'carlos', valor: 1100, data: '2026-01-15', hora: '11:00', pecas: [{nome:'Kit correia dentada', qtd:1, valor:450},{nome:'Tensor', qtd:1, valor:180},{nome:'Rolamento tensionador', qtd:1, valor:95}] },
+      { numero: 'OS-0152', cliente: 'Juliana Ribeiro', veiculo: 'Uno', ano: '2019', cor: 'Branco', placa: 'PQR-8S12', km: 51000, servico: 'Troca de óleo + filtros', problema: 'Manutenção preventiva', status: 'finalizado', mecanico: 'paulo', valor: 320, data: '2026-01-14', hora: '14:30', pecas: [{nome:'Óleo 20W50', qtd:1, valor:120},{nome:'Filtro de óleo', qtd:1, valor:38}] },
+      { numero: 'OS-0153', cliente: 'Bruno Mendes', veiculo: 'HB20', ano: '2023', cor: 'Azul', placa: 'STU-1V45', km: 9500, servico: 'Alinhamento + balanceamento', problema: 'Volante vibrando em alta velocidade', status: 'entregue', mecanico: 'maria', valor: 220, data: '2026-01-14', hora: '16:00', pecas: [] },
+      { numero: 'OS-0154', cliente: 'Camila Ferreira', veiculo: 'Gol', ano: '2021', cor: 'Prata', placa: 'VWX-4Y78', km: 38000, servico: 'Revisão freios + suspensão', problema: 'Pedal de freio macio, freios rangendo', status: 'cancelado', mecanico: 'joao', valor: 780, data: '2026-01-14', hora: '10:00', pecas: [{nome:'Pastilha diant.', qtd:1, valor:340},{nome:'Pastilha traseira', qtd:1, valor:280},{nome:'Fluido de freio', qtd:1, valor:45}] },
+      { numero: 'OS-0155', cliente: 'André Luiz Souza', veiculo: 'Focus', ano: '2018', cor: 'Preto', placa: 'YZ-9A01', km: 82000, servico: 'Reparo motor', problema: 'Motor falhando, perda de potência', status: 'pecas', mecanico: 'carlos', valor: 2400, data: '2026-01-13', hora: '08:00', pecas: [{nome:'Velas de ignição', qtd:4, valor:280},{nome:'Bobinas', qtd:1, valor:950}] },
+      { numero: 'OS-0156', cliente: 'Daniela Rocha', veiculo: 'Sandero', ano: '2022', cor: 'Vermelho', placa: 'BC-3D56', km: 19500, servico: 'Troca amortecedores traseiros', problema: 'Carro batendo muito em buracos', status: 'andamento', mecanico: 'paulo', valor: 950, data: '2026-01-13', hora: '13:30', pecas: [{nome:'Amortecedor traseiro', qtd:2, valor:720}] }
+    ];
+
+    const ordens_de_servico_mecanicos = {
+      carlos: 'Carlos Mendes', paulo: 'Paulo Henrique', maria: 'Maria Oliveira', joao: 'João Santos'
+    };
+
+    const ordens_de_servico_statusMap = {
+      aguardando: { label: 'Aguardando', color: 'bg-amber-100 text-amber-700 border-amber-200', dot: 'bg-amber-400' },
+      diagnostico: { label: 'Em Diagnóstico', color: 'bg-sky-100 text-sky-700 border-sky-200', dot: 'bg-sky-400' },
+      pecas: { label: 'Aguardando Peças', color: 'bg-purple-100 text-purple-700 border-purple-200', dot: 'bg-purple-400' },
+      andamento: { label: 'Em Andamento', color: 'bg-orange-100 text-orange-700 border-orange-200', dot: 'bg-orange-400' },
+      finalizado: { label: 'Finalizado', color: 'bg-emerald-100 text-emerald-700 border-emerald-200', dot: 'bg-emerald-400' },
+      entregue: { label: 'Entregue', color: 'bg-stone-100 text-stone-500 border-stone-200', dot: 'bg-stone-400' },
+      cancelado: { label: 'Cancelado', color: 'bg-red-100 text-red-700 border-red-200', dot: 'bg-red-400' }
+    };
+
+    const ordens_de_servico_iconeStatus = { aguardando: '⏳', diagnostico: '🔍', pecas: '📦', andamento: '🔧', finalizado: '✅', entregue: '🚗', cancelado: '✕' };
+
+    function ordens_de_servico_inicializar() {
+      const container = document.getElementById('lista-os');
+      container.innerHTML = ordens_de_servico_dados.map((os, i) => {
+        const st = ordens_de_servico_statusMap[os.status];
+        const mec = ordens_de_servico_mecanicos[os.mecanico];
+        const inicial = os.cliente.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+        const hue = (i * 47 + 15) % 360;
+        const corAvatar = `hsl(${hue}, 55%, 42%)`;
+        const dataHoje = '2026-01-15';
+        const isToday = os.data === dataHoje;
+        const dataExib = isToday ? `Hoje, ${os.hora}` : dataBR(os.data);
+        return `
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 active:scale-[0.98] transition-all duration-200 cursor-pointer"
+             onclick="ordens_de_servico_abrirDetalhe('${os.numero}')">
+          <div class="flex items-start justify-between mb-2.5">
+            <div class="flex items-center gap-2.5">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
+                   style="background:${corAvatar}">${inicial}</div>
+              <div>
+                <div class="font-bold text-stone-800 text-sm font-display leading-tight">${os.numero}</div>
+                <div class="text-xs text-stone-400 mt-0.5">${dataExib}</div>
+              </div>
+            </div>
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold border ${st.color} flex-shrink-0">
+              <span class="w-1.5 h-1.5 rounded-full ${st.dot}"></span>${st.label}
+            </span>
+          </div>
+          <div class="ml-[52px]">
+            <div class="text-sm font-semibold text-stone-700">${os.cliente}</div>
+            <div class="text-xs text-stone-500 mt-1">${os.veiculo} ${os.ano} &bull; ${os.cor} &bull; ${os.placa} &bull; ${os.km.toLocaleString('pt-BR')} km</div>
+            <div class="flex items-center gap-1.5 mt-1.5">
+              <svg class="w-3.5 h-3.5 text-stone-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+              <span class="text-xs text-stone-500">${mec}</span>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+      ordens_de_servico_aplicarFiltros();
+      ordens_de_servico_atualizarIndicadores();
+    }
+
+    function ordens_de_servico_aplicarFiltros() {
+      const busca = document.getElementById('search-os').value.toLowerCase().trim();
+      const filtro = document.querySelector('.ordens-filtro-btn.bg-marca-700');
+      const statusAtivo = filtro ? filtro.dataset.filtro : 'todos';
+      const mecanicoAtivo = document.getElementById('filter-mecanico').value;
+      const cards = document.querySelectorAll('#lista-os > div');
+      let visiveis = 0;
+      cards.forEach(card => {
+        const os = ordens_de_servico_dados.find(o => card.innerHTML.includes(o.numero));
+        if (!os) return;
+        const matchBusca = !busca ||
+          os.numero.toLowerCase().includes(busca) ||
+          os.cliente.toLowerCase().includes(busca) ||
+          os.veiculo.toLowerCase().includes(busca) ||
+          os.placa.toLowerCase().includes(busca);
+        const matchStatus = statusAtivo === 'todos' || os.status === statusAtivo;
+        const matchMecanico = mecanicoAtivo === 'todos' || os.mecanico === mecanicoAtivo;
+        if (matchBusca && matchStatus && matchMecanico) {
+          card.classList.remove('hidden');
+          visiveis++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      document.getElementById('result-count').textContent = `Exibindo ${visiveis} de ${ordens_de_servico_dados.length} OS`;
+      document.getElementById('empty-os').classList.toggle('hidden', visiveis > 0);
+      document.getElementById('lista-os').classList.toggle('hidden', visiveis === 0);
+    }
+
+    function ordens_de_servico_abrirDetalhe(numero) {
+      const os = ordens_de_servico_dados.find(o => o.numero === numero);
+      if (!os) return;
+      const st = ordens_de_servico_statusMap[os.status];
+      const mec = ordens_de_servico_mecanicos[os.mecanico];
+      const inicial = os.cliente.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase();
+      const hue = ordens_de_servico_dados.indexOf(os) * 47 + 15;
+      const isAcao = ['aguardando','diagnostico'].includes(os.status);
+      const isAndamento = os.status === 'andamento';
+      const isFinalizado = os.status === 'finalizado';
+      const isEntregue = os.status === 'entregue';
+      const isCancelado = os.status === 'cancelado';
+      const icone = ordens_de_servico_iconeStatus[os.status];
+      let acoes = '';
+      if (isAcao) acoes += `<button onclick="ordens_de_servico_acao('${os.numero}','iniciar')" class="flex-1 bg-marca-600 hover:bg-marca-700 active:scale-95 text-white py-3 rounded-xl font-semibold text-sm transition-all">Iniciar Serviço</button>`;
+      else if (isAndamento) acoes += `<button onclick="ordens_de_servico_acao('${os.numero}','finalizar')" class="flex-1 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white py-3 rounded-xl font-semibold text-sm transition-all">Finalizar Serviço</button>`;
+      else if (isFinalizado) acoes += `<button onclick="ordens_de_servico_acao('${os.numero}','entregar')" class="flex-1 bg-marca-600 hover:bg-marca-700 active:scale-95 text-white py-3 rounded-xl font-semibold text-sm transition-all">Registrar Entrega</button>`;
+      if (!isCancelado && !isEntregue) acoes += `<button onclick="ordens_de_servico_acao('${os.numero}','cancelar')" class="px-4 bg-red-50 hover:bg-red-100 active:scale-95 text-red-600 py-3 rounded-xl font-semibold text-sm transition-all border border-red-200">Cancelar</button>`;
+      const totalPecas = os.pecas.reduce((s, p) => s + (p.valor || p.val || 0), 0);
+      const total = (os.valor || 0) + totalPecas;
+      const pecasHtml = os.pecas.length > 0 ? `
+        <div class="bg-stone-50 rounded-xl p-3">
+          <div class="text-xs font-semibold text-stone-500 mb-2 uppercase tracking-wider">Peças Utilizadas</div>
+          ${os.pecas.map(p => `<div class="flex justify-between text-xs py-1.5 border-b border-stone-100 last:border-0"><span class="text-stone-600">${p.nome} <span class="text-stone-400">x${p.qtd}</span></span><span class="font-semibold text-stone-700">${brl(p.valor || p.val || 0)}</span></div>`).join('')}
+          <div class="flex justify-between text-xs pt-2 mt-1 border-t border-stone-200 font-bold text-stone-800"><span>Total Peças</span><span>${brl(totalPecas)}</span></div>
+        </div>` : '<p class="text-xs text-stone-400 italic">Nenhuma peça registrada</p>';
+
+      const html = `
+        <div class="flex flex-col h-full">
+          <div class="p-5 pb-4 bg-gradient-to-br from-marca-800 to-marca-900 text-white relative overflow-hidden flex-shrink-0">
+            <div class="absolute top-0 right-0 w-32 h-32 rounded-full bg-marca-600 opacity-20 -translate-y-8 translate-x-8"></div>
+            <div class="absolute bottom-0 left-0 w-20 h-20 rounded-full bg-marca-500 opacity-15 translate-y-6 -translate-x-6"></div>
+            <div class="relative">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center text-xl font-bold">${inicial}</div>
+                <div><div class="font-bold text-lg font-display">${os.numero}</div><div class="text-xs text-marca-100">${dataBR(os.data)} &bull; ${os.hora}</div></div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/15 backdrop-blur rounded-full text-xs font-semibold"><span>${icone}</span>${st.label}</span>
+                <span class="text-2xl font-bold">${brl(total)}</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex-1 overflow-y-auto overscroll-none p-5 space-y-4">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4 text-marca-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg></div>
+              <div><div class="text-xs text-stone-400">Cliente</div><div class="text-sm font-semibold text-stone-700">${os.cliente}</div></div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4 text-marca-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg></div>
+              <div><div class="text-xs text-stone-400">Veículo</div><div class="text-sm font-semibold text-stone-700">${os.veiculo} ${os.ano} &bull; ${os.cor}</div><div class="text-xs text-stone-500">${os.placa} &bull; ${os.km.toLocaleString('pt-BR')} km</div></div>
+            </div>
+            <div class="bg-stone-50 rounded-xl p-3">
+              <div class="text-xs font-semibold text-stone-500 mb-1 uppercase tracking-wider">Problema Relatado</div>
+              <p class="text-sm text-stone-600">${os.problema}</p>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-stone-500 mb-2 uppercase tracking-wider">Serviços Realizados</div>
+              <div class="bg-stone-50 rounded-xl p-3">
+                <p class="text-sm text-stone-600 font-medium">${os.servico}</p>
+                <div class="text-right mt-1"><span class="text-sm font-bold text-marca-700">${brl(os.valor)}</span><span class="text-xs text-stone-400 ml-1">mão de obra</span></div>
+              </div>
+            </div>
+            ${pecasHtml}
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center flex-shrink-0"><svg class="w-4 h-4 text-marca-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a17.933 17.933 0 0112 2.632 17.933 17.933 0 012.632-12"/></svg></div>
+              <div><div class="text-xs text-stone-400">Mecânico Responsável</div><div class="text-sm font-semibold text-stone-700">${mec}</div></div>
+            </div>
+            <div class="bg-marca-50/50 rounded-xl p-3 border border-marca-100">
+              <div class="text-xs font-semibold text-marca-700 mb-2 uppercase tracking-wider">Timeline</div>
+              <div class="space-y-3">
+                <div class="flex gap-2.5"><div class="flex flex-col items-center"><div class="w-2.5 h-2.5 rounded-full bg-marca-500 mt-0.5"></div><div class="w-px h-full bg-marca-200"></div></div><div><div class="text-xs font-semibold text-stone-600">OS Aberta</div><div class="text-[10px] text-stone-400">${dataBR(os.data)} &bull; ${os.hora}</div></div></div>
+                ${!['aguardando','cancelado'].includes(os.status) ? `<div class="flex gap-2.5"><div class="flex flex-col items-center"><div class="w-2.5 h-2.5 rounded-full bg-orange-400 mt-0.5"></div><div class="w-px h-full bg-stone-200"></div></div><div><div class="text-xs font-semibold text-stone-600">Serviço Iniciado</div><div class="text-[10px] text-stone-400">Em andamento</div></div></div>` : ''}
+                ${['finalizado','entregue'].includes(os.status) ? `<div class="flex gap-2.5"><div class="flex flex-col items-center"><div class="w-2.5 h-2.5 rounded-full bg-emerald-500 mt-0.5"></div><div class="w-px h-full bg-stone-200"></div></div><div><div class="text-xs font-semibold text-stone-600">Serviço Finalizado</div><div class="text-[10px] text-stone-400">Pronto para entrega</div></div></div>` : ''}
+                ${isEntregue ? `<div class="flex gap-2.5"><div class="flex flex-col items-center"><div class="w-2.5 h-2.5 rounded-full bg-stone-400 mt-0.5"></div></div><div><div class="text-xs font-semibold text-stone-600">Entregue ao Cliente</div><div class="text-[10px] text-stone-400">Concluído</div></div></div>` : ''}
+                ${isCancelado ? `<div class="flex gap-2.5"><div class="flex flex-col items-center"><div class="w-2.5 h-2.5 rounded-full bg-red-400 mt-0.5"></div></div><div><div class="text-xs font-semibold text-red-600">Ordem Cancelada</div><div class="text-[10px] text-stone-400">Serviço não realizado</div></div></div>` : ''}
+              </div>
+            </div>
+          </div>
+          ${acoes ? `<div class="p-4 pt-3 border-t border-stone-100 bg-white flex gap-2 flex-shrink-0">${acoes}</div>` : ''}
+        </div>`;
+      abrirModal(html, os.numero + ' — Detalhes');
+      setTimeout(() => { const btn = document.querySelector('.modal-close-btn'); if(btn) btn.onclick = fecharModal; }, 50);
+    }
+
+    function ordens_de_servico_acao(numero, acao) {
+      const os = ordens_de_servico_dados.find(o => o.numero === numero);
+      if (!os) return;
+      const msgs = { iniciar: `Serviço de ${os.numero} iniciado com sucesso!`, finalizar: `${os.numero} finalizada! Pronta para entrega.`, entregar: `${os.numero} entregue ao cliente com sucesso!`, cancelar: `${os.numero} foi cancelada.` };
+      if (acao === 'cancelar') {
+        const confirmHtml = `<div class="text-center py-4"><div class="w-14 h-14 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-3"><svg class="w-7 h-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg></div><p class="text-sm text-stone-600 mb-1">Cancelar <strong>${os.numero}</strong>?</p><p class="text-xs text-stone-400">Esta ação não pode ser desfeita.</p></div>`;
+        abrirModal(confirmHtml, 'Confirmar Cancelamento');
+        setTimeout(() => {
+          const simBtn = document.querySelector('.modal-close-btn');
+          const modalFooter = document.querySelector('#modal-container .modal-footer-area');
+          if (modalFooter) {
+            modalFooter.innerHTML = `<button onclick="fecharModal();ordens_de_servico_executarAcao('${numero}','cancelar')" class="flex-1 bg-red-500 hover:bg-red-600 active:scale-95 text-white py-3 rounded-xl font-semibold text-sm transition-all">Sim, Cancelar</button><button onclick="fecharModal()" class="flex-1 bg-stone-100 hover:bg-stone-200 active:scale-95 text-stone-700 py-3 rounded-xl font-semibold text-sm transition-all">Voltar</button>`;
+          }
+        }, 80);
+        return;
+      }
+      ordens_de_servico_executarAcao(numero, acao);
+    }
+
+    function ordens_de_servico_executarAcao(numero, acao) {
+      const os = ordens_de_servico_dados.find(o => o.numero === numero);
+      if (!os) return;
+      const mapa = { iniciar: 'andamento', finalizar: 'finalizado', entregar: 'entregue', cancelar: 'cancelado' };
+      os.status = mapa[acao] || os.status;
+      fecharModal();
+      toast(ordens_de_servico_acao.msg || `${os.numero} atualizada!`, 'ok');
+      setTimeout(() => { ordens_de_servico_inicializar(); }, 350);
+    }
+
+    function ordens_de_servico_setFilter(f) {
+      document.querySelectorAll('.ordens-filtro-btn').forEach(btn => {
+        if (btn.dataset.filtro === f) {
+          btn.className = 'ordens-filtro-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all bg-marca-700 text-white';
+        } else {
+          btn.className = 'ordens-filtro-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all bg-stone-100 text-stone-600 hover:bg-stone-200';
+        }
+      });
+      ordens_de_servico_aplicarFiltros();
+    }
+
+    function ordens_de_servico_clearSearch() {
+      const input = document.getElementById('search-os');
+      input.value = '';
+      document.getElementById('clear-search').classList.add('hidden');
+      ordens_de_servico_aplicarFiltros();
+      input.focus();
+    }
+
+    function ordens_de_servico_atualizarIndicadores() {
+      const cnt = { aguardando: 0, diagnostico: 0, pecas: 0, andamento: 0 };
+      ordens_de_servico_dados.forEach(o => { if (cnt[o.status] !== undefined) cnt[o.status]++; });
+      document.getElementById('ind-aguardando').textContent = cnt.aguardando + cnt.diagnostico;
+      document.getElementById('ind-diagnostico').textContent = cnt.diagnostico;
+      document.getElementById('ind-pecas').textContent = cnt.pecas;
+      document.getElementById('ind-andamento').textContent = cnt.andamento;
+    }
+
+    let ordens_de_servico_pty = null, ordens_de_servico_pulling = false, ordens_de_servico_pyStart = 0;
+    function ordens_de_servico_ptrStart(e) {
+      const el = document.getElementById('lista-os');
+      if (el && el.scrollTop === 0) {
+        ordens_de_servico_pyStart = e.touches[0].clientY;
+        ordens_de_servico_pty = e.touches[0].clientY;
+      }
+    }
+    function ordens_de_servico_ptrMove(e) {
+      if (ordens_de_servico_pulling) return;
+      const el = document.getElementById('lista-os');
+      if (!el || el.scrollTop > 0) return;
+      const dy = e.touches[0].clientY - ordens_de_servico_pyStart;
+      if (dy > 65) {
+        ordens_de_servico_pulling = true;
+        const ptr = document.getElementById('ptr-os');
+        ptr.classList.remove('opacity-0');
+        ptr.classList.add('opacity-100');
+        setTimeout(() => {
+          ptr.classList.remove('opacity-100');
+          ptr.classList.add('opacity-0');
+          ordens_de_servico_pulling = false;
+          toast('Lista atualizada!', 'ok');
+        }, 1800);
+      }
+    }
+    document.addEventListener('touchstart', ordens_de_servico_ptrStart, { passive: true });
+    document.addEventListener('touchmove', ordens_de_servico_ptrMove, { passive: true });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('search-os');
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          const btn = document.getElementById('clear-search');
+          if (searchInput.value.trim()) btn.classList.remove('hidden'); else btn.classList.add('hidden');
+          ordens_de_servico_aplicarFiltros();
+        });
+      }
+      const section = document.getElementById('ordens-de-servico');
+      if (section) {
+        const obs = new MutationObserver(() => {
+          if (!section.classList.contains('hidden')) {
+            ordens_de_servico_atualizarIndicadores();
+            searchInput.value = '';
+            document.getElementById('clear-search').classList.add('hidden');
+            ordens_de_servico_setFilter('todos');
+            document.getElementById('filter-mecanico').value = 'todos';
+            ordens_de_servico_aplicarFiltros();
+          }
+        });
+        obs.observe(section, { attributes: true, attributeFilter: ['class'] });
+      }
+    });
+
+    window.ordens_de_servico_inicializar = ordens_de_servico_inicializar;
+    window.ordens_de_servico_aplicarFiltros = ordens_de_servico_aplicarFiltros;
+    window.ordens_de_servico_setFilter = ordens_de_servico_setFilter;
+    window.ordens_de_servico_clearSearch = ordens_de_servico_clearSearch;
+    window.ordens_de_servico_abrirDetalhe = ordens_de_servico_abrirDetalhe;
+    window.ordens_de_servico_acao = ordens_de_servico_acao;
+    window.ordens_de_servico_executarAcao = ordens_de_servico_executarAcao;
+    window.ordens_de_servico_atualizarIndicadores = ordens_de_servico_atualizarIndicadores;
+    </script>
+
     <!-- TELAS -->
         </div>
       </main>
